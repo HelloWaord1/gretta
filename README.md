@@ -73,6 +73,13 @@ http://localhost:5173
 - **Zetta**: Angry when Market Cap > $7M, calm when lower  
 - **Position**: Based ONLY on Market Cap (0$ = Start, $10M = Israel)
 
+### Progress Visualization
+- **Start Point**: $0 Market Cap
+- **$2M Marker**: Regular progress indicator
+- **$5M Milestone**: 😊 Greta becomes happy (animated glow)
+- **$7M Milestone**: 😡 Zetta becomes angry (animated glow)  
+- **End Point**: $10M = Israel destination
+
 ## 🔧 Configuration
 
 ### Token Address
