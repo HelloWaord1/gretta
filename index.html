@@ -1,282 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greta VS Zetta - Ocean Battle</title>
+    <title>Грета VS Газа - Морское Путешествие</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" type="image/png">
 </head>
 <body>
-    <!-- Ocean Background -->
-    <div class="bg-wrapper">
-        <div class="ocean-bg"></div>
+    <!-- Морской фон -->
+    <div class="ocean-background">
+        <div class="waves"></div>
+        <div class="bubbles"></div>
     </div>
 
     <div class="container">
-        <!-- Clean Header -->
+        <!-- Шапка -->
         <header class="header">
             <div class="logo-section">
-                <img src="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" 
-                     alt="Greta Logo" class="header-logo" onerror="this.style.display='none';">
-                <div class="title-group">
-                    <h1>🚢 Greta VS Zetta 🌊</h1>
-                    <div class="subtitle-badge">
-                        <span class="badge-text">LIVE OCEAN BATTLE</span>
-                    </div>
-                </div>
-                <img src="https://i.postimg.cc/9FnymGpm/1671387348156322358.jpg" 
-                     alt="Zetta Logo" class="header-logo" onerror="this.style.display='none';">
+                <img src="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" alt="Грета" class="logo">
+                <h1>🚢 Путешествие Греты в Газу 🌊</h1>
+                <img src="https://i.postimg.cc/9FnymGpm/1671387348156322358.jpg" alt="Еврей" class="logo">
             </div>
-            <p class="subtitle">The higher the Market Cap, the closer Greta gets to Gaza! 🌊</p>
-            <div class="fun-subtitle">
-                <span class="rainbow-text">Epic Ocean Battle: Climate Warrior vs. Business Master!</span>
-            </div>
+            <p class="subtitle">Чем выше Market Cap, тем ближе Грета к Газе!</p>
             
-            <!-- Live Stats -->
-            <div class="live-stats-banner">
-                <div class="stat-item">
-                    <span class="stat-label">🔴 LIVE</span>
-                    <span class="stat-value">Battle Active</span>
+            <!-- Статистика токена -->
+            <div class="token-stats">
+                <div class="stat-card">
+                    <div class="stat-label">💰 Market Cap</div>
+                    <div class="stat-value" id="marketCap">Загрузка...</div>
+                    <div class="stat-change" id="priceChange">+0%</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label">👥 Users</span>
-                    <span class="stat-value" id="userCount">1,337</span>
+                <div class="stat-card">
+                    <div class="stat-label">💎 Цена</div>
+                    <div class="stat-value" id="tokenPrice">$0.000000</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label">⚡ Clicks</span>
-                    <span class="stat-value" id="totalClicks">0</span>
+                <div class="stat-card">
+                    <div class="stat-label">📊 Объем 24ч</div>
+                    <div class="stat-value" id="volume24h">$0</div>
                 </div>
             </div>
         </header>
 
-        <!-- Market Cap Section -->
-        <div class="market-cap-section">
-            <div class="market-cap-container">
-                <div class="market-cap-display">
-                    <div class="cap-icon">📈</div>
-                    <div class="cap-info">
-                        <span class="label">💰 Market Cap:</span>
-                        <span id="marketCap" class="value">Loading...</span>
-                        <div class="cap-change" id="capChange">+$0</div>
-                    </div>
-                    <div class="cap-trend">
-                        <canvas id="trendChart" width="100" height="30"></canvas>
-                    </div>
-                </div>
-                
-                <!-- Market Analysis -->
-                <div class="market-analysis">
-                    <div class="analysis-item">
-                        <span class="analysis-label">24h Volume:</span>
-                        <span class="analysis-value" id="volume24h">Loading...</span>
-                    </div>
-                    <div class="analysis-item">
-                        <span class="analysis-label">Price:</span>
-                        <span class="analysis-value" id="tokenPrice">Loading...</span>
-                    </div>
-                    <div class="analysis-item">
-                        <span class="analysis-label">Volatility:</span>
-                        <span class="analysis-value volatile" id="volatility">LIVE 🌊</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Journey Zone -->
-        <div class="journey-zone">
-            <!-- Journey Background -->
-            <div class="journey-background">
-                <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800" 
-                     alt="Ocean Background" class="ocean-image" onerror="this.style.display='none';">
-            </div>
-            
-            <div class="journey-line">
+        <!-- Морское путешествие -->
+        <section class="journey-section">
+            <div class="journey-container">
+                <!-- Начальная точка -->
                 <div class="start-point">
-                    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" 
-                         alt="Home" class="point-icon" onerror="this.innerHTML='🏠';">
-                    <span>Start</span>
+                    <div class="point-icon">🏠</div>
+                    <div class="point-label">Начало</div>
                 </div>
+
+                <!-- Конечная точка -->
                 <div class="end-point">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041728.png" 
-                         alt="Flag" class="point-icon" onerror="this.innerHTML='🏴‍☠️';">
-                    <span>Gaza</span>
+                    <div class="point-icon">🏴</div>
+                    <div class="point-label">Газа</div>
                 </div>
+
+                <!-- Маршрут -->
+                <div class="route-line"></div>
                 
-                <!-- Boat with Greta -->
-                <div id="boat" class="boat">
-                    <div class="boat-hull">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2990/2990058.png" 
-                             alt="Boat" class="boat-image" onerror="this.innerHTML='⛵';">
-                    </div>
-                    <div id="greta" class="greta-character">
-                        <div class="character-container">
-                            <img src="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" 
-                                 alt="Greta Thunberg" class="greta-main-img">
-                            <div class="character-effects">
-                                <div class="emotion-indicator" id="gretaEmotion">😊</div>
-                                <div class="speech-bubble" id="gretaSpeech">HOW DARE YOU!</div>
-                            </div>
-                        </div>
+                <!-- Лодка с Гретой -->
+                <div class="boat" id="boat">
+                    <div class="boat-body">⛵</div>
+                    <div class="greta-character" id="greta">
+                        <img src="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" alt="Грета" class="character-img">
+                        <div class="emotion" id="gretaEmotion">😊</div>
+                        <div class="speech-bubble" id="gretaSpeech">Спасем планету!</div>
                     </div>
                 </div>
-                
-                <!-- Progress Markers -->
+
+                <!-- Прогресс маркеры -->
                 <div class="progress-markers">
-                    <div class="marker" data-position="25">25%</div>
-                    <div class="marker" data-position="50">50%</div>
-                    <div class="marker" data-position="75">75%</div>
+                    <div class="marker">25%</div>
+                    <div class="marker">50%</div>
+                    <div class="marker">75%</div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Zetta Character Section -->
-        <div class="zetta-character-section">
-            <div class="character-panel">
-                <div class="panel-header">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" 
-                         alt="Business" class="panel-icon" onerror="this.innerHTML='💰';">
-                    <h3>ZETTA THE BUSINESS MASTER</h3>
-                </div>
-                
-                <div id="jewishCharacter" class="jewish-character">
-                    <div class="character-image">
-                        <div class="character-avatar">
-                            <img src="https://i.postimg.cc/9FnymGpm/1671387348156322358.jpg" 
-                                 alt="Zetta" class="zetta-avatar">
-                            <div class="character-effects">
-                                <div class="emotion-indicator" id="jewishEmotion">😤</div>
-                                <div class="speech-bubble" id="jewishSpeech">BUSINESS TIME!</div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Еврейский персонаж -->
+        <section class="opponent-section">
+            <div class="opponent-container">
+                <h3>🏦 Противник</h3>
+                <div class="opponent-character" id="opponent">
+                    <img src="https://i.postimg.cc/9FnymGpm/1671387348156322358.jpg" alt="Противник" class="opponent-img">
+                    <div class="emotion" id="opponentEmotion">😤</div>
+                    <div class="speech-bubble" id="opponentSpeech">Бизнес превыше всего!</div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Support Counters -->
-        <div class="support-counters">
-            <div class="counter greta-counter">
-                <div class="counter-header">
-                    <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" 
-                         alt="Earth" class="counter-icon-img" onerror="this.innerHTML='🌱';">
-                    <h3>Team Greta Support</h3>
-                </div>
-                <div class="counter-body">
-                    <div id="gretaSupport" class="counter-value">0</div>
-                    <div class="counter-subtitle">Climate Warriors Unite!</div>
+        <!-- Счетчики поддержки -->
+        <section class="support-section">
+            <div class="support-counters">
+                <div class="counter greta-counter">
+                    <div class="counter-icon">🌱</div>
+                    <div class="counter-title">Поддержка Греты</div>
+                    <div class="counter-value" id="gretaSupport">0</div>
                     <div class="counter-progress">
-                        <div class="progress-bar greta-progress"></div>
+                        <div class="progress-bar greta-progress" id="gretaProgress"></div>
                     </div>
                 </div>
+
+                <div class="counter opponent-counter">
+                    <div class="counter-icon">💰</div>
+                    <div class="counter-title">Поддержка Противника</div>
+                    <div class="counter-value" id="opponentSupport">0</div>
+                    <div class="counter-progress">
+                        <div class="progress-bar opponent-progress" id="opponentProgress"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Инструкции -->
+        <section class="instructions">
+            <h3>🎮 Как играть</h3>
+            <div class="instruction-grid">
+                <div class="instruction-item">
+                    <div class="instruction-icon">👈</div>
+                    <div class="instruction-text">
+                        <strong>Поддержи Грету</strong>
+                        <span>Кликай по левой части экрана</span>
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-icon">👉</div>
+                    <div class="instruction-text">
+                        <strong>Поддержи Противника</strong>
+                        <span>Кликай по правой части экрана</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pro-tip">
+                💡 <strong>Совет:</strong> Кликай прямо на персонажей для мега-эффекта!
+            </div>
+        </section>
+
+        <!-- Социальные кнопки -->
+        <footer class="social-section">
+            <h3>🌊 Присоединяйся к морскому сообществу</h3>
+            <div class="social-buttons">
+                <a href="#" class="social-btn telegram">
+                    <span class="social-icon">📱</span>
+                    <span>Telegram</span>
+                </a>
+                <a href="#" class="social-btn twitter">
+                    <span class="social-icon">🐦</span>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" class="social-btn discord">
+                    <span class="social-icon">🎮</span>
+                    <span>Discord</span>
+                </a>
             </div>
             
-            <div class="counter zetta-counter">
-                <div class="counter-header">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" 
-                         alt="Money" class="counter-icon-img" onerror="this.innerHTML='💰';">
-                    <h3>Team Zetta Support</h3>
-                </div>
-                <div class="counter-body">
-                    <div id="israelSupport" class="counter-value">0</div>
-                    <div class="counter-subtitle">Business Masters Rule!</div>
-                    <div class="counter-progress">
-                        <div class="progress-bar zetta-progress"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <button class="buy-token-btn" id="buyToken">
+                <span class="btn-icon">🚀</span>
+                <span>Купить $GRETA Токен!</span>
+            </button>
 
-        <!-- Battle Instructions -->
-        <div class="battle-instructions">
-            <div class="instruction-card">
-                <div class="card-header">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" 
-                         alt="Game Controller" class="instruction-icon-img" onerror="this.innerHTML='🎮';">
-                    <h3>Ocean Battle Instructions</h3>
-                </div>
-                <div class="instruction-grid">
-                    <div class="instruction-item">
-                        <div class="instruction-visual">
-                            <span class="instruction-icon">👈</span>
-                            <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" 
-                                 alt="Earth" class="mini-icon" onerror="this.style.display='none';">
-                        </div>
-                        <div class="instruction-text">
-                            <strong>Support Greta</strong>
-                            <span>Click LEFT side to help climate action</span>
-                        </div>
-                    </div>
-                    <div class="instruction-item">
-                        <div class="instruction-visual">
-                            <span class="instruction-icon">👉</span>
-                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" 
-                                 alt="Money" class="mini-icon" onerror="this.style.display='none';">
-                        </div>
-                        <div class="instruction-text">
-                            <strong>Support Zetta</strong>
-                            <span>Click RIGHT side to support business</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="pro-tip">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2996/2996747.png" 
-                         alt="Tip" class="tip-icon" onerror="this.innerHTML='🎯';">
-                    <strong>Pro Tip:</strong> Click directly on characters for MEGA EFFECTS! 
-                </div>
-            </div>
-        </div>
-
-        <!-- Social Section -->
-        <footer class="social-section">
-            <div class="social-container">
-                <div class="social-header">
-                    <h3>Join the Ocean Battle</h3>
-                    <p>Connect with thousands of other warriors!</p>
-                </div>
-                <div class="social-buttons">
-                    <a href="#" class="social-btn telegram">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" 
-                             alt="Telegram" class="social-icon" onerror="this.innerHTML='📱';">
-                        <span>Telegram</span>
-                    </a>
-                    <a href="#" class="social-btn twitter">
-                        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" 
-                             alt="Twitter" class="social-icon" onerror="this.innerHTML='🐦';">
-                        <span>Twitter</span>
-                    </a>
-                    <a href="#" class="social-btn discord">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" 
-                             alt="Discord" class="social-icon" onerror="this.innerHTML='🎮';">
-                        <span>Discord</span>
-                    </a>
-                </div>
-                <button class="buy-token-btn">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" 
-                         alt="Coin" class="btn-icon" onerror="this.innerHTML='🚀';">
-                    <span>Buy $GRETA Token!</span>
-                </button>
-                <div class="disclaimer">
-                    <small>⚠️ This is a parody site for entertainment purposes only! 😄</small>
-                </div>
+            <div class="disclaimer">
+                ⚠️ Это развлекательный сайт, не финансовый совет!
             </div>
         </footer>
 
-        <!-- UI Elements -->
-        <div id="clickIndicator" class="click-indicator"></div>
-        <div class="floating-emojis"></div>
-        <div class="battle-effects"></div>
+        <!-- Эффекты -->
+        <div class="click-effects" id="clickEffects"></div>
+        <div class="floating-emojis" id="floatingEmojis"></div>
         
-        <!-- Loading Screen -->
-        <div id="loadingScreen" class="loading-screen">
-            <div class="loading-content">
-                <img src="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" 
-                     alt="Loading" class="loading-image">
-                <h2>Loading Ocean Battle...</h2>
-                <div class="loading-bar">
-                    <div class="loading-progress"></div>
-                </div>
+        <!-- Индикатор кликов -->
+        <div class="click-indicator" id="clickIndicator"></div>
+
+        <!-- Статистика -->
+        <div class="stats-counter">
+            <div class="total-clicks">Всего кликов: <span id="totalClicks">0</span></div>
+            <div class="users-online">Онлайн: <span id="usersOnline">1,337</span></div>
+        </div>
+    </div>
+
+    <!-- Загрузочный экран -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <img src="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" alt="Загрузка" class="loading-image">
+            <h2>🌊 Загружаем морское путешествие...</h2>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
             </div>
         </div>
     </div>

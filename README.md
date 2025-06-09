@@ -1,195 +1,126 @@
-# 🚢 Greta VS Zetta - Epic Battle Simulator
+# 🚢 Морское Путешествие Греты в Газу 🌊
 
-## 🌟 Overview
+Интерактивный веб-сайт, где движение Греты Тунберг на лодке зависит от реального Market Cap криптотокена.
 
-**Greta VS Zetta** is an interactive web-based battle simulator featuring Greta Thunberg on her epic journey to Gaza, where the outcome depends on cryptocurrency Market Cap fluctuations. This professional-grade entertainment website combines climate activism themes with financial market dynamics in a humorous and engaging format.
+## 📋 Описание Проекта
 
-## 🎮 Game Features
+Это развлекательный сайт, созданный по техническому заданию:
+- **Грета на лодке** плывет из начальной точки в Газу
+- **Движение зависит** от реального Market Cap токена и поддержки пользователей
+- **Еврейский персонаж** выступает противником с противоположными эмоциями
+- **Интерактивная механика** кликов и поддержки
+- **Морская голубая тематика** с простым, чистым дизайном
 
-### 🌊 Epic Journey System
-- **Dynamic Boat Movement**: Greta's boat position changes based on Market Cap
-- **Real-time Ocean Environment**: Professional ocean background with animated waves
-- **Progress Tracking**: Visual markers showing journey completion percentage
+## 🎮 Функционал
 
-### � Market Cap Integration
-- **Live Market Simulation**: Automatic Market Cap fluctuations every 3 seconds
-- **Interactive Trading**: Click to influence market values
-- **Professional Charts**: Real-time trend visualization with canvas-based graphs
-- **Market Analysis**: 24h volume, ATH, and volatility indicators
+### Основная Механика
+- **Левые клики** - поддержка Греты (движение к Газе)
+- **Правые клики** - поддержка противника (замедление движения)
+- **Клики по персонажам** - мега-эффекты (x5 поддержки)
+- **Позиция лодки** зависит от Market Cap + соотношение поддержки
 
-### � Character System
-- **Greta Thunberg**: Climate warrior with emotional responses
-  - Uses specified image: https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png
-  - Dynamic emotions based on position (😊 when approaching Gaza, 😡 when far)
-  - Interactive speech bubbles with climate messages
-- **Zetta the Money Master**: Stereotypical business character
-  - Professional avatar with business styling
-  - Opposite emotional responses to Greta
-  - Money-themed accessories and animations
+### Эмоции Персонажей
+- **Грета**: 😊 когда >50% пути к Газе, 😟 когда <50%
+- **Противник**: 😤 когда Грета близко к цели, 😎 когда далеко
 
-### 🎯 Battle Mechanics
-- **Split Screen Interaction**: 
-  - Left clicks support Greta (+Market Cap)
-  - Right clicks support Zetta (-Market Cap)
-- **Mega Effects**: Direct character clicks for enhanced impact
-- **Professional UI**: Real-time counters, progress bars, and statistics
-- **Achievement System**: Unlock rewards for various milestones
+### Реальные Данные Токена
+- **Токен**: `Ey59PH7Z4BFU4HjyKnyMdWt5GGN76KazTAwQihoUXRnk`
+- **API источники**: DexScreener, Jupiter, CoinGecko
+- **Обновление**: каждые 30 секунд
+- **Fallback**: симуляция при недоступности API
 
-### � Professional Design Elements
-- **High-Quality Images**: Uses real internet images throughout
-- **Modern UI/UX**: Professional gradients, glassmorphism effects
-- **Responsive Design**: Mobile-friendly interface
-- **Loading Screen**: Smooth loading experience with progress bar
-- **Visual Effects**: Floating emojis, confetti, battle effects
+## 🛠 Технологии
 
-## 🚀 Technical Features
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Дизайн**: Морская голубая тематика, градиенты, анимации
+- **API**: Реальные криптоданные через множественные источники
+- **Эффекты**: Плавающие эмодзи, конфетти, речевые пузыри
+- **Адаптивность**: Полная поддержка мобильных устройств
 
-### 📱 Modern Web Technologies
-- **Pure HTML5/CSS3/JavaScript**: No external frameworks required
-- **CSS Grid & Flexbox**: Professional responsive layouts
-- **Canvas API**: Real-time chart rendering
-- **Professional Fonts**: Google Fonts integration (Roboto, Open Sans, Comic Neue)
-- **Optimized Performance**: 60fps animations with requestAnimationFrame
+## 🎨 Дизайн
 
-### � Interactive Elements
-- **Live Statistics**: User count, click tracking, market analytics
-- **Social Media Integration**: Links to Telegram, Twitter, Discord
-- **Token Purchase Button**: Simulated cryptocurrency buying experience
-- **Professional Error Handling**: Graceful fallbacks for missing resources
+### Цветовая Схема
+- **Основной**: #e3f2fd → #29b6f6 (океанский градиент)
+- **Акценты**: #2196f3 (синий), #4caf50 (зеленый), #ff9800 (оранжевый)
+- **Фон**: Анимированные волны и пузыри
 
-### 🌐 Image Integration
-- **Professional Character Images**: High-quality avatars and icons
-- **Background Assets**: Ocean scenes, business imagery
-- **Icon Library**: Comprehensive icon set from CDNs
-- **Fallback System**: Emoji fallbacks if images fail to load
+### Визуальные Эффекты
+- **Морские волны** в фоне
+- **Качающаяся лодка** с анимацией
+- **Плавающие эмодзи** при кликах
+- **Речевые пузыри** персонажей
+- **Конфетти** при мега-эффектах
 
-## 🎪 Entertainment Features
+## 📊 Отображаемые Данные
 
-### 🎵 Dynamic Interactions
-- **Speech Bubbles**: Contextual character dialogue
-- **Battle Effects**: Comic book style "POW!", "BOOM!", "ZAP!" effects
-- **Floating Animations**: Smooth emoji and text effects
-- **Random Events**: Surprise achievements and interactions
+### Токен Статистика
+- Market Cap (рыночная капитализация)
+- Цена токена в USD
+- Объем торгов за 24 часа
+- Изменение цены за 24 часа
 
-### 🏆 Achievement System
-- **Progress Milestones**: First click, century clicks, market goals
-- **Character Achievements**: Support-based unlocks
-- **Victory Conditions**: Climate vs Business outcomes
-- **Visual Rewards**: Confetti and celebration effects
+### Игровая Статистика
+- Поддержка Греты
+- Поддержка противника
+- Общее количество кликов
+- Пользователи онлайн (симуляция)
 
-## 📊 Live Statistics
+## 🚀 Запуск
 
-### 📈 Real-time Tracking
-- **Market Cap**: Live cryptocurrency simulation
-- **Support Counters**: Team Greta vs Team Zetta
-- **User Analytics**: Active users and total clicks
-- **Market Data**: Volume, volatility, and trends
-
-### 📱 Social Features
-- **Community Integration**: Social media buttons
-- **Sharing Capabilities**: Battle results and achievements
-- **Live User Count**: Simulated active participants
-
-## 🛠️ Installation & Setup
-
-### � Local Development
+1. **Клонировать репозиторий**
 ```bash
-# Clone or download files
-# No build process required - pure web technologies
-
-# Start local server (Python example)
-python -m http.server 8000
-
-# Or use any static file server
-# Access at http://localhost:8000
+git clone <repository-url>
+cd ocean-journey
 ```
 
-### 🌐 Production Deployment
-- **Static Hosting**: Deploy to any static hosting service
-- **CDN Integration**: All external resources use CDN links
-- **No Backend Required**: Fully client-side application
-
-## 📁 File Structure
-
-```
-greta-vs-zetta/
-├── index.html          # Main HTML structure
-├── styles.css          # Professional CSS styling
-├── script.js           # Game logic and interactions
-└── README.md          # This documentation
+2. **Запустить HTTP сервер**
+```bash
+python3 -m http.server 8000
 ```
 
-## 🎨 Design Philosophy
+3. **Открыть в браузере**
+```
+http://localhost:8000
+```
 
-### 🌟 Professional Aesthetics
-- **Modern Glassmorphism**: Transparent, blurred backgrounds
-- **Professional Color Palette**: Ocean blues, climate greens, business golds
-- **High-Quality Typography**: Multiple font families for hierarchy
-- **Smooth Animations**: Eased transitions and natural movement
+## 🎯 Игровая Логика
 
-### 🎮 User Experience
-- **Intuitive Controls**: Simple click mechanics
-- **Visual Feedback**: Immediate response to all interactions
-- **Progressive Enhancement**: Works on all devices and browsers
-- **Accessibility**: High contrast, readable fonts, clear navigation
+### Позиция Лодки
+```javascript
+gretaPosition = базоваяПозиция + marketCapВлияние + поддержкаВлияние
+```
 
-## � Browser Compatibility
+- **Базовая позиция**: 15%
+- **Market Cap влияние**: до +40% (масштаб: миллионы USD)
+- **Поддержка влияние**: (поддержкаГреты - поддержкаПротивника) × 0.3
 
-- ✅ Chrome 90+
-- ✅ Firefox 88+
-- ✅ Safari 14+
-- ✅ Edge 90+
-- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+### API Приоритеты
+1. **DexScreener** - основной источник (лучший для Solana)
+2. **Jupiter** - резервный источник
+3. **Симуляция** - при недоступности API
 
-## ⚡ Performance Optimizations
+## 📱 Адаптивность
 
-- **Optimized Animations**: 60fps with requestAnimationFrame
-- **Efficient DOM Updates**: Minimal reflows and repaints
-- **Image Optimization**: Proper sizing and lazy loading
-- **Memory Management**: Cleanup of temporary elements
+- **Desktop**: Полный функционал
+- **Tablet**: Адаптированные размеры
+- **Mobile**: Вертикальная компоновка, упрощенные элементы
 
-## 🎭 Character Details
+## 🌟 Особенности
 
-### 🌱 Greta Character
-- **Visual**: Uses provided image from postimg.cc
-- **Emotions**: Dynamic based on journey progress
-- **Interactions**: Climate-focused messaging
-- **Animations**: Boat movement and emotional responses
+- **Русский интерфейс** по ТЗ
+- **Реальные криптоданные** из надежных источников
+- **Плавные анимации** и переходы
+- **Интерактивные эффекты** на каждое действие
+- **Отзывчивый дизайн** для всех устройств
 
-### 💼 Zetta Character
-- **Visual**: Professional business avatar
-- **Stereotypical Elements**: Hat, beard, suit, money bag
-- **Personality**: Money-focused, opposite to Greta
-- **Interactions**: Business and profit messaging
+## ⚠️ Дисклеймер
 
-## 🎪 Easter Eggs & Hidden Features
+Это развлекательный сайт, созданный исключительно для демонстрации и веселья. Не является финансовым советом или призывом к инвестициям.
 
-- **Mouse Trail Sparkles**: Random sparkle effects on mouse movement
-- **Comic Background Effects**: Animated "POW/BOOM/ZAP" elements
-- **Random Achievements**: Surprise unlocks during gameplay
-- **Professional Loading**: Smooth startup experience
+## 📝 Лицензия
 
-## ⚠️ Disclaimer
-
-This is a **parody website created for entertainment purposes only**. It's a humorous take on current events and should not be taken seriously. All characters and situations are used in a satirical context.
-
-## 🤝 Contributing
-
-This is an open entertainment project. Feel free to:
-- Add new achievements
-- Improve visual effects
-- Enhance character interactions
-- Optimize performance
-- Add new Easter eggs
-
-## 📄 License
-
-This project is open source and available for educational and entertainment purposes.
+Создано для образовательных и развлекательных целей.
 
 ---
 
-**🎮 Ready to Battle? Choose your side and let the epic journey begin!**
-
-*Team Greta* 🌱 vs *Team Zetta* 💰
-
-**May the best ideology win!** ⚔️ 
+🌊 **Поплыли спасать планету или зарабатывать деньги!** 🚢
