@@ -1,91 +1,144 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrettaCap Voyage</title>
+    <title>GrettaCap Voyage - Eco-Warrior vs. Bibi Battle!</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Fun Background Elements -->
+    <div class="comic-effects">
+        <div class="pow-effect">POW!</div>
+        <div class="boom-effect">BOOM!</div>
+        <div class="zap-effect">ZAP!</div>
+    </div>
+
     <div class="container">
-        <!-- Заголовок -->
+        <!-- Header -->
         <header class="header">
-            <h1>GrettaCap Voyage</h1>
-            <p class="subtitle">Чем выше Market Cap, тем ближе Грета к Газе!</p>
+            <h1>🚢 GrettaCap Voyage 🚢</h1>
+            <p class="subtitle">The higher the Market Cap, the closer Greta gets to Gaza! 💥</p>
+            <div class="fun-subtitle">
+                <span class="rainbow-text">Epic Battle: Climate Warrior vs. Political Boss!</span>
+            </div>
         </header>
 
-        <!-- Market Cap индикатор -->
+        <!-- Market Cap Indicator -->
         <div class="market-cap-section">
             <div class="market-cap-display">
-                <span class="label">Market Cap:</span>
+                <span class="label">💰 Market Cap:</span>
                 <span id="marketCap" class="value">$1,234,567</span>
+                <div class="cap-emoji">📈</div>
             </div>
         </div>
 
-        <!-- Зона путешествия -->
+        <!-- Journey Zone -->
         <div class="journey-zone">
             <div class="journey-line">
                 <div class="start-point">
-                    <span>Старт</span>
+                    <span>🏠 Start</span>
                 </div>
                 <div class="end-point">
-                    <span>Газа</span>
+                    <span>🏴‍☠️ Gaza</span>
                 </div>
                 
-                <!-- Лодка с Гретой -->
+                <!-- Boat with Greta -->
                 <div id="boat" class="boat">
                     <div id="greta" class="greta-character">
-                        <div class="greta-face">
-                            <div class="eyes">
-                                <div class="eye left"></div>
-                                <div class="eye right"></div>
+                        <div class="character-image">
+                            <img src="https://i.kym-cdn.com/entries/icons/facebook/000/031/727/cover10.jpg" 
+                                 alt="Greta Cartoon" class="greta-img" onerror="this.style.display='none';">
+                            <div class="backup-greta">
+                                <div class="greta-face">
+                                    <div class="eyes">
+                                        <div class="eye left">👁️</div>
+                                        <div class="eye right">👁️</div>
+                                    </div>
+                                    <div class="mouth">😠</div>
+                                </div>
+                                <div class="speech-bubble">HOW DARE YOU!</div>
                             </div>
-                            <div class="mouth"></div>
                         </div>
-                        <div class="greta-body"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Персонаж Израиля -->
+        <!-- Israeli Character -->
         <div class="israel-character-section">
             <div id="israelCharacter" class="israel-character">
-                <div class="israel-face">
-                    <div class="eyes">
-                        <div class="eye left"></div>
-                        <div class="eye right"></div>
+                <div class="character-image">
+                    <img src="https://cdn.britannica.com/96/199796-050-7B3CB755/Benjamin-Netanyahu-2018.jpg" 
+                         alt="Netanyahu Cartoon" class="israel-img" onerror="this.style.display='none';">
+                    <div class="backup-israel">
+                        <div class="israel-face">
+                            <div class="eyes">
+                                <div class="eye left">😡</div>
+                                <div class="eye right">😡</div>
+                            </div>
+                            <div class="mouth">🤬</div>
+                        </div>
+                        <div class="speech-bubble">NOT TODAY!</div>
                     </div>
-                    <div class="mouth"></div>
                 </div>
-                <div class="israel-body"></div>
             </div>
         </div>
 
-        <!-- Счетчики поддержки -->
+        <!-- Support Counters -->
         <div class="support-counters">
             <div class="counter greta-counter">
-                <div class="counter-label">Поддержка Греты</div>
+                <div class="counter-icon">🌱</div>
+                <div class="counter-label">Team Greta Support</div>
                 <div id="gretaSupport" class="counter-value">0</div>
+                <div class="counter-subtitle">Climate Warriors!</div>
             </div>
             <div class="counter israel-counter">
-                <div class="counter-label">Поддержка Израиля</div>
+                <div class="counter-icon">🏛️</div>
+                <div class="counter-label">Team Israel Support</div>
                 <div id="israelSupport" class="counter-value">0</div>
+                <div class="counter-subtitle">Democracy Defenders!</div>
             </div>
         </div>
 
-        <!-- Социальные кнопки -->
+        <!-- Battle Instructions -->
+        <div class="battle-instructions">
+            <div class="instruction-card">
+                <h3>🎮 How to Battle!</h3>
+                <div class="instruction-item">
+                    <span class="instruction-icon">👈</span>
+                    <span>Click LEFT side = Support Greta! (+Market Cap)</span>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">👉</span>
+                    <span>Click RIGHT side = Support Israel! (-Market Cap)</span>
+                </div>
+                <div class="fun-note">
+                    <strong>🎯 Pro Tip:</strong> Click directly on characters for MEGA EFFECTS! 
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Buttons -->
         <footer class="social-section">
             <div class="social-buttons">
-                <a href="#" class="social-btn telegram">Telegram</a>
-                <a href="#" class="social-btn twitter">Twitter</a>
-                <a href="#" class="social-btn discord">Discord</a>
+                <a href="#" class="social-btn telegram">📱 Telegram</a>
+                <a href="#" class="social-btn twitter">🐦 Twitter</a>
+                <a href="#" class="social-btn discord">🎮 Discord</a>
             </div>
-            <button class="buy-token-btn">Купить токен</button>
+            <button class="buy-token-btn">🚀 Buy $GRETA Token!</button>
+            <div class="disclaimer">
+                <small>⚠️ This is a parody site for entertainment purposes only! 😄</small>
+            </div>
         </footer>
 
-        <!-- Индикатор для кликов -->
+        <!-- Click Indicator -->
         <div id="clickIndicator" class="click-indicator"></div>
+
+        <!-- Fun Elements -->
+        <div class="floating-emojis"></div>
+        <div class="battle-effects"></div>
     </div>
 
     <script src="script.js"></script>

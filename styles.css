@@ -5,341 +5,337 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Comic Neue', cursive;
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 25%, #45b7d1 50%, #96ceb4 75%, #ffeaa7 100%);
+    background-size: 400% 400%;
+    animation: rainbowBg 15s ease infinite;
     min-height: 100vh;
-    color: white;
+    color: #2d3436;
     overflow-x: hidden;
+    position: relative;
 }
 
+@keyframes rainbowBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Comic book style borders and shadows */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
+    z-index: 1;
 }
 
-/* Заголовок */
+/* Header Styles */
 .header {
     text-align: center;
     margin-bottom: 30px;
+    background: white;
+    border: 5px solid #2d3436;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 8px 8px 0px #e17055, 16px 16px 0px #fdcb6e;
+    transform: rotate(-1deg);
+    position: relative;
+}
+
+.header::before {
+    content: '💥';
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    font-size: 2rem;
+    background: #e17055;
+    border-radius: 50%;
+    padding: 10px;
+    border: 3px solid #2d3436;
 }
 
 .header h1 {
-    font-size: 3rem;
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.5rem;
     margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    background: linear-gradient(45deg, #FFD700, #FFA500);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    text-shadow: 4px 4px 0px #e17055;
+    color: #2d3436;
+    text-transform: uppercase;
+    letter-spacing: 3px;
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-bottom: 20px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #636e72;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 0px white;
 }
 
-/* Market Cap секция */
+.fun-subtitle {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 3px solid #2d3436;
+    display: inline-block;
+}
+
+.rainbow-text {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowText 3s ease infinite;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+@keyframes rainbowText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Market Cap Section */
 .market-cap-section {
     text-align: center;
     margin-bottom: 40px;
 }
 
 .market-cap-display {
-    background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,165,0,0.2));
-    padding: 15px 30px;
+    background: white;
+    padding: 20px 40px;
     border-radius: 50px;
     display: inline-block;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255,215,0,0.5);
-    box-shadow: 0 0 20px rgba(255,215,0,0.3);
+    border: 5px solid #2d3436;
+    box-shadow: 6px 6px 0px #fdcb6e;
+    position: relative;
+    transform: rotate(1deg);
 }
 
 .market-cap-display .label {
-    font-size: 1.1rem;
-    margin-right: 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-right: 15px;
+    color: #2d3436;
 }
 
 .market-cap-display .value {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     font-weight: bold;
-    color: #FFD700;
+    color: #00b894;
+    text-shadow: 2px 2px 0px #55a3ff;
 }
 
-/* Зона путешествия */
+.cap-emoji {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 1.5rem;
+    background: #00b894;
+    border-radius: 50%;
+    padding: 8px;
+    border: 3px solid #2d3436;
+}
+
+/* Journey Zone */
 .journey-zone {
     margin: 50px 0;
     position: relative;
-    height: 200px;
+    height: 250px;
+    background: white;
+    border: 5px solid #2d3436;
+    border-radius: 20px;
+    box-shadow: 8px 8px 0px #74b9ff;
+    overflow: hidden;
+}
+
+.journey-zone::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: repeating-linear-gradient(
+        90deg,
+        #74b9ff 0px,
+        #0984e3 10px,
+        #74b9ff 20px
+    );
+    animation: waterWaves 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes waterWaves {
+    0%, 100% { transform: translateX(0) scaleY(1); }
+    50% { transform: translateX(20px) scaleY(1.1); }
 }
 
 .journey-line {
     position: relative;
-    height: 4px;
-    background: linear-gradient(90deg, #4CAF50 0%, #FF5722 100%);
-    margin: 100px 50px;
-    border-radius: 2px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    height: 6px;
+    background: linear-gradient(90deg, #00b894 0%, #e17055 100%);
+    margin: 120px 50px;
+    border-radius: 3px;
+    border: 2px solid #2d3436;
 }
 
 .start-point, .end-point {
     position: absolute;
-    top: -40px;
-    background: rgba(255,255,255,0.9);
-    color: #333;
-    padding: 8px 15px;
-    border-radius: 20px;
+    top: -50px;
+    background: white;
+    color: #2d3436;
+    padding: 10px 20px;
+    border-radius: 25px;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
+    border: 3px solid #2d3436;
+    box-shadow: 4px 4px 0px #ddd;
 }
 
 .start-point {
-    left: -25px;
+    left: -35px;
+    background: #00b894;
+    color: white;
 }
 
 .end-point {
-    right: -25px;
+    right: -35px;
+    background: #e17055;
+    color: white;
 }
 
-/* Лодка и Грета */
+/* Boat and Characters */
 .boat {
     position: absolute;
-    top: -50px;
+    top: -80px;
     left: 10%;
-    transition: left 1s ease-in-out;
+    transition: left 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     z-index: 10;
 }
 
-.greta-character {
+.greta-character, .israel-character {
     position: relative;
-    width: 60px;
-    height: 80px;
     cursor: pointer;
-}
-
-.greta-face {
-    width: 40px;
-    height: 40px;
-    background: #FDBCB4;
-    border-radius: 50%;
-    position: relative;
-    margin: 0 auto 5px;
-    border: 2px solid #333;
-}
-
-.eyes {
-    position: absolute;
-    top: 12px;
-    width: 100%;
-}
-
-.eye {
-    width: 6px;
-    height: 6px;
-    background: #333;
-    border-radius: 50%;
-    position: absolute;
-}
-
-.eye.left {
-    left: 8px;
-}
-
-.eye.right {
-    right: 8px;
-}
-
-.mouth {
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 6px;
-    border: 2px solid #333;
-    border-top: none;
-    border-radius: 0 0 12px 12px;
     transition: all 0.3s ease;
 }
 
-.greta-body {
-    width: 50px;
-    height: 35px;
-    background: #2196F3;
-    border-radius: 25px 25px 10px 10px;
-    margin: 0 auto;
+.greta-character:hover, .israel-character:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.character-image {
     position: relative;
 }
 
-.greta-body::before {
+.greta-img, .israel-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid #2d3436;
+    box-shadow: 4px 4px 0px #e17055;
+    background: white;
+    object-fit: cover;
+}
+
+.backup-greta, .backup-israel {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: none;
+}
+
+.speech-bubble {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 3px solid #2d3436;
+    font-size: 0.8rem;
+    font-weight: bold;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.speech-bubble::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -8px;
     left: 50%;
     transform: translateX(-50%);
-    width: 40px;
-    height: 8px;
-    background: #8B4513;
-    border-radius: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #2d3436;
 }
 
-.greta-body::after {
-    content: '⛵';
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5rem;
-    z-index: 1;
+.greta-character.active .speech-bubble,
+.israel-character.active .speech-bubble {
+    opacity: 1;
+    top: -50px;
 }
 
-/* Эмоции Греты */
-.greta-character.happy .mouth {
-    border-top: 2px solid #333;
-    border-bottom: none;
-    border-radius: 12px 12px 0 0;
+/* Character Emotions */
+.greta-character.happy {
+    animation: happyBounce 1s infinite;
 }
 
-.greta-character.happy .greta-character {
-    animation: bounce 1s infinite;
+.greta-character.sad {
+    animation: sadShake 2s infinite;
 }
 
-.greta-character.happy .greta-face::after {
-    content: '😊';
-    position: absolute;
-    top: -5px;
-    right: -20px;
-    font-size: 1.2rem;
-    animation: float 2s ease-in-out infinite;
+.israel-character.angry {
+    animation: angryShake 0.5s infinite;
 }
 
-.greta-character.sad .mouth {
-    border-radius: 0 0 12px 12px;
-    border-top: none;
+.israel-character.happy {
+    animation: relievedFloat 2s ease-in-out infinite;
 }
 
-.greta-character.sad .eye {
-    animation: blink 2s infinite;
+@keyframes happyBounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(0deg); }
+    40% { transform: translateY(-15px) rotate(5deg); }
+    60% { transform: translateY(-8px) rotate(-3deg); }
 }
 
-.greta-character.sad .greta-face::after {
-    content: '😢';
-    position: absolute;
-    top: -5px;
-    right: -20px;
-    font-size: 1.2rem;
-    animation: float 2s ease-in-out infinite;
+@keyframes sadShake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-2deg); }
+    75% { transform: rotate(2deg); }
 }
 
-/* Персонаж Израиля */
+@keyframes angryShake {
+    0%, 100% { transform: translateX(0) scale(1); }
+    25% { transform: translateX(-3px) scale(1.05); }
+    75% { transform: translateX(3px) scale(1.05); }
+}
+
+@keyframes relievedFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+/* Israeli Character Section */
 .israel-character-section {
     text-align: center;
     margin: 40px 0;
+    background: white;
+    border: 5px solid #2d3436;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 8px 8px 0px #a29bfe;
+    transform: rotate(1deg);
 }
 
-.israel-character {
-    width: 80px;
-    height: 100px;
-    margin: 0 auto;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.israel-face {
-    width: 50px;
-    height: 50px;
-    background: #FDBCB4;
-    border-radius: 50%;
-    position: relative;
-    margin: 0 auto 10px;
-    border: 2px solid #333;
-}
-
-.israel-character .eyes {
-    position: absolute;
-    top: 15px;
-    width: 100%;
-}
-
-.israel-character .eye {
-    width: 8px;
-    height: 8px;
-    background: #333;
-    border-radius: 50%;
-    position: absolute;
-}
-
-.israel-character .eye.left {
-    left: 10px;
-}
-
-.israel-character .eye.right {
-    right: 10px;
-}
-
-.israel-character .mouth {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 16px;
-    height: 8px;
-    border: 2px solid #333;
-    border-top: none;
-    border-radius: 0 0 16px 16px;
-    transition: all 0.3s ease;
-}
-
-.israel-body {
-    width: 60px;
-    height: 40px;
-    background: #4CAF50;
-    border-radius: 30px 30px 15px 15px;
-    margin: 0 auto;
-}
-
-/* Эмоции персонажа Израиля */
-.israel-character.angry {
-    animation: shake 0.5s infinite;
-}
-
-.israel-character.angry .mouth {
-    border-top: 2px solid #333;
-    border-bottom: none;
-    border-radius: 16px 16px 0 0;
-    background: #FF0000;
-}
-
-.israel-character.angry .eye {
-    background: #FF0000;
-}
-
-.israel-character.angry .israel-face::after {
-    content: '😡';
-    position: absolute;
-    top: -5px;
-    right: -20px;
-    font-size: 1.2rem;
-    animation: float 2s ease-in-out infinite;
-}
-
-.israel-character.happy .mouth {
-    border-top: 2px solid #333;
-    border-bottom: none;
-    border-radius: 16px 16px 0 0;
-}
-
-.israel-character.happy .israel-face::after {
-    content: '😌';
-    position: absolute;
-    top: -5px;
-    right: -20px;
-    font-size: 1.2rem;
-    animation: float 2s ease-in-out infinite;
-}
-
-/* Счетчики поддержки */
+/* Support Counters */
 .support-counters {
     display: flex;
     justify-content: space-around;
@@ -349,197 +345,254 @@ body {
 }
 
 .counter {
-    background: rgba(255,255,255,0.1);
-    padding: 20px;
-    border-radius: 15px;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
     text-align: center;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255,255,255,0.2);
-    min-width: 200px;
+    border: 5px solid #2d3436;
+    min-width: 250px;
+    position: relative;
+    transform: rotate(-1deg);
+    transition: all 0.3s ease;
+}
+
+.counter:hover {
+    transform: rotate(0deg) scale(1.05);
+}
+
+.counter-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
 }
 
 .counter-label {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
     margin-bottom: 10px;
-    opacity: 0.9;
+    color: #2d3436;
 }
 
 .counter-value {
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: bold;
-    color: #FFD700;
+    text-shadow: 3px 3px 0px #ddd;
+    margin-bottom: 5px;
+}
+
+.counter-subtitle {
+    font-size: 0.9rem;
+    color: #636e72;
+    font-weight: bold;
 }
 
 .greta-counter {
-    border-color: #2196F3;
+    box-shadow: 8px 8px 0px #00b894;
+}
+
+.greta-counter .counter-value {
+    color: #00b894;
 }
 
 .israel-counter {
-    border-color: #4CAF50;
+    box-shadow: 8px 8px 0px #e17055;
 }
 
-/* Социальные кнопки */
+.israel-counter .counter-value {
+    color: #e17055;
+}
+
+/* Battle Instructions */
+.battle-instructions {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.instruction-card {
+    background: white;
+    border: 5px solid #2d3436;
+    border-radius: 20px;
+    padding: 25px;
+    display: inline-block;
+    box-shadow: 8px 8px 0px #fdcb6e;
+    transform: rotate(-1deg);
+}
+
+.instruction-card h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #2d3436;
+}
+
+.instruction-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.instruction-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+}
+
+/* Social Section */
 .social-section {
     text-align: center;
     margin-top: 50px;
+    background: white;
+    border: 5px solid #2d3436;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 8px 8px 0px #fd79a8;
+    transform: rotate(1deg);
 }
 
 .social-buttons {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 20px;
+    margin-bottom: 25px;
     flex-wrap: wrap;
 }
 
 .social-btn {
-    padding: 12px 24px;
-    background: rgba(255,255,255,0.1);
-    color: white;
+    padding: 15px 25px;
+    background: white;
+    color: #2d3436;
     text-decoration: none;
     border-radius: 25px;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255,255,255,0.2);
+    border: 3px solid #2d3436;
+    font-weight: bold;
+    font-size: 1.1rem;
     position: relative;
     overflow: hidden;
 }
 
 .social-btn:hover {
-    background: rgba(255,255,255,0.2);
-    transform: translateY(-2px);
+    transform: translateY(-5px) rotate(5deg);
+    box-shadow: 5px 5px 0px #2d3436;
 }
 
-.social-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
+.telegram { 
+    box-shadow: 5px 5px 0px #0984e3;
+    background: #74b9ff;
+    color: white;
 }
 
-.social-btn:hover::before {
-    left: 100%;
+.twitter { 
+    box-shadow: 5px 5px 0px #00cec9;
+    background: #55efc4;
+    color: #2d3436;
 }
 
-.telegram { border-color: #0088cc; }
-.twitter { border-color: #1da1f2; }
-.discord { border-color: #7289da; }
+.discord { 
+    box-shadow: 5px 5px 0px #6c5ce7;
+    background: #a29bfe;
+    color: white;
+}
 
 .buy-token-btn {
-    padding: 15px 40px;
-    background: linear-gradient(45deg, #FFD700, #FFA500);
-    color: #333;
-    border: none;
+    padding: 20px 40px;
+    background: linear-gradient(45deg, #00b894, #00cec9);
+    color: white;
+    border: 5px solid #2d3436;
     border-radius: 30px;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255,215,0,0.3);
-    position: relative;
-    overflow: hidden;
+    box-shadow: 8px 8px 0px #2d3436;
+    font-family: 'Fredoka One', cursive;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .buy-token-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 12px 12px 0px #2d3436;
 }
 
-.buy-token-btn::after {
-    content: '🚀';
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-    font-size: 1.2rem;
-    transition: transform 0.3s ease;
+.disclaimer {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ffeaa7;
+    border: 3px solid #2d3436;
+    border-radius: 15px;
+    color: #2d3436;
+    font-weight: bold;
 }
 
-.buy-token-btn:hover::after {
-    transform: translateY(-50%) translateX(5px);
-}
-
-/* Индикатор кликов */
+/* Click Indicator */
 .click-indicator {
     position: fixed;
     pointer-events: none;
     z-index: 1000;
     opacity: 0;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
-    color: #FFD700;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: #2d3436;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
     transition: all 0.5s ease;
+    font-family: 'Fredoka One', cursive;
 }
 
 .click-indicator.show {
     opacity: 1;
-    animation: clickPop 0.8s ease-out;
-}
-
-/* Анимации */
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-    20%, 40%, 60%, 80% { transform: translateX(2px); }
-}
-
-@keyframes blink {
-    0%, 90%, 100% { opacity: 1; }
-    95% { opacity: 0; }
+    animation: clickPop 1s ease-out;
 }
 
 @keyframes clickPop {
     0% {
-        transform: scale(1) translateY(0);
+        transform: scale(1) translateY(0) rotate(0deg);
         opacity: 1;
     }
     50% {
-        transform: scale(1.2) translateY(-10px);
+        transform: scale(1.5) translateY(-20px) rotate(10deg);
     }
     100% {
-        transform: scale(1) translateY(-30px);
+        transform: scale(1) translateY(-50px) rotate(-5deg);
         opacity: 0;
     }
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-5px);
-    }
+/* Floating Elements */
+.floating-emojis {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
 }
 
-/* Адаптивность */
+/* Pulsation for counters */
+.counter.updated {
+    animation: counterPulse 0.6s ease-in-out;
+}
+
+@keyframes counterPulse {
+    0% { transform: rotate(-1deg) scale(1); }
+    50% { transform: rotate(0deg) scale(1.1); box-shadow: 0 0 30px rgba(255,255,255,0.8); }
+    100% { transform: rotate(-1deg) scale(1); }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .header h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
     
     .subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     
     .journey-line {
-        margin: 100px 20px;
+        margin: 120px 20px;
     }
     
     .support-counters {
@@ -553,38 +606,150 @@ body {
     }
     
     .counter {
-        min-width: 250px;
+        min-width: 280px;
+        transform: rotate(0deg);
+    }
+    
+    .greta-img, .israel-img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .instruction-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .instruction-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 }
 
-/* Волны на фоне */
-.journey-zone::before {
+/* Comic book style effects */
+body::after {
     content: '';
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    top: 0;
     left: 0;
-    right: 0;
-    height: 40px;
-    background: repeating-linear-gradient(
-        90deg,
-        transparent 0px,
-        rgba(135, 206, 235, 0.3) 10px,
-        transparent 20px
-    );
-    animation: waves 3s ease-in-out infinite;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px, 70px 70px, 30px 30px;
+    animation: sparkle 6s linear infinite;
     pointer-events: none;
+    z-index: -1;
 }
 
-@keyframes waves {
+@keyframes sparkle {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Journey status indicator styling */
+#journeyStatus {
+    background: white !important;
+    color: #2d3436 !important;
+    border: 3px solid #2d3436 !important;
+    box-shadow: 4px 4px 0px #fdcb6e !important;
+    font-family: 'Fredoka One', cursive !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+
+/* Comic Effects Background */
+.comic-effects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -2;
+}
+
+.pow-effect, .boom-effect, .zap-effect {
+    position: absolute;
+    font-family: 'Fredoka One', cursive;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2d3436;
+    text-shadow: 3px 3px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white;
+    animation: comicFloat 8s ease-in-out infinite;
+    opacity: 0.1;
+}
+
+.pow-effect {
+    top: 20%;
+    left: 10%;
+    color: #e17055;
+    animation-delay: 0s;
+}
+
+.boom-effect {
+    top: 60%;
+    right: 15%;
+    color: #fdcb6e;
+    animation-delay: 3s;
+}
+
+.zap-effect {
+    bottom: 30%;
+    left: 20%;
+    color: #74b9ff;
+    animation-delay: 6s;
+}
+
+@keyframes comicFloat {
     0%, 100% {
-        transform: translateX(0);
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0.1;
     }
     50% {
-        transform: translateX(10px);
+        transform: translateY(-20px) rotate(5deg) scale(1.1);
+        opacity: 0.3;
     }
 }
 
-/* Звездное небо на фоне */
+/* Fun Note Styling */
+.fun-note {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background: linear-gradient(45deg, #ff6b6b, #ffeaa7);
+    border: 3px solid #2d3436;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    text-align: center;
+    animation: funNoteBounce 2s ease-in-out infinite;
+}
+
+@keyframes funNoteBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Enhanced character images */
+.greta-img, .israel-img {
+    filter: contrast(1.2) saturate(1.3);
+    transition: all 0.3s ease;
+}
+
+.greta-character:hover .greta-img {
+    filter: contrast(1.4) saturate(1.5) hue-rotate(10deg);
+}
+
+.israel-character:hover .israel-img {
+    filter: contrast(1.4) saturate(1.5) hue-rotate(-10deg);
+}
+
+/* Additional comic book dots pattern */
 body::before {
     content: '';
     position: fixed;
@@ -593,92 +758,242 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
-        radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.9), transparent);
-    background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: starTwinkle 4s ease-in-out infinite;
+        radial-gradient(circle at 25% 25%, rgba(255, 107, 107, 0.1) 2px, transparent 2px),
+        radial-gradient(circle at 75% 75%, rgba(116, 185, 255, 0.1) 2px, transparent 2px),
+        radial-gradient(circle at 50% 50%, rgba(253, 203, 110, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px, 40px 40px, 20px 20px;
+    animation: comicDots 10s linear infinite;
     pointer-events: none;
+    z-index: -3;
+}
+
+@keyframes comicDots {
+    0% { background-position: 0 0, 0 0, 0 0; }
+    100% { background-position: 30px 30px, -40px -40px, 20px 20px; }
+}
+
+/* Enhanced speech bubbles */
+.speech-bubble {
+    background: white;
+    border: 3px solid #2d3436;
+    position: relative;
+    font-family: 'Fredoka One', cursive;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid white;
+    z-index: 2;
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #2d3436;
+    z-index: 1;
+}
+
+/* Enhanced button hover effects */
+.social-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+}
+
+.social-btn:hover::after {
+    transform: translateX(100%);
+}
+
+/* Market cap pulsing glow */
+.market-cap-display {
+    position: relative;
+    overflow: visible;
+}
+
+.market-cap-display::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #00b894, #74b9ff, #fd79a8, #fdcb6e);
+    border-radius: 55px;
     z-index: -1;
+    animation: marketCapPulse 3s ease-in-out infinite;
+    opacity: 0.7;
 }
 
-@keyframes starTwinkle {
+@keyframes marketCapPulse {
     0%, 100% {
-        opacity: 0.8;
-    }
-    50% {
-        opacity: 1;
-    }
-}
-
-/* Пульсация для счетчиков при обновлении */
-.counter.updated {
-    animation: pulse 0.5s ease-in-out;
-}
-
-@keyframes pulse {
-    0% {
         transform: scale(1);
+        opacity: 0.7;
     }
     50% {
         transform: scale(1.05);
-        box-shadow: 0 0 20px rgba(255,215,0,0.5);
-    }
-    100% {
-        transform: scale(1);
+        opacity: 0.9;
     }
 }
 
-/* Дополнительные эмоции для глаз */
-.greta-character.happy .eye {
-    animation: happyEyes 2s ease-in-out infinite;
-}
-
-.israel-character.angry .eye {
-    background: #FF4444;
-    animation: angryEyes 0.3s ease-in-out infinite;
-}
-
-@keyframes happyEyes {
-    0%, 90%, 100% {
-        transform: scaleY(1);
-    }
-    95% {
-        transform: scaleY(0.1);
-    }
-}
-
-@keyframes angryEyes {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-}
-
-/* Индикатор загрузки для Market Cap */
-.market-cap-display::after {
+/* Journey line enhancements */
+.journey-line::before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
-    border-radius: 52px;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(90deg, #00b894 0%, #e17055 100%);
+    border-radius: 6px;
     z-index: -1;
-    animation: marketCapGlow 2s linear infinite;
+    animation: journeyGlow 2s ease-in-out infinite alternate;
 }
 
-@keyframes marketCapGlow {
+@keyframes journeyGlow {
+    0% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+        box-shadow: 0 0 20px rgba(0, 184, 148, 0.5);
+    }
+}
+
+/* Counter icons animation */
+.counter-icon {
+    animation: iconBounce 3s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    40% {
+        transform: translateY(-10px) rotate(10deg);
+    }
+    60% {
+        transform: translateY(-5px) rotate(-5deg);
+    }
+}
+
+/* Enhanced water waves */
+.journey-zone::after {
+    content: '🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊';
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    font-size: 1.5rem;
+    text-align: center;
+    animation: waveEmojis 4s ease-in-out infinite;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+@keyframes waveEmojis {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(20px);
+    }
+}
+
+/* Character image border effects */
+.character-image {
+    position: relative;
+}
+
+.character-image::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 4px dashed #2d3436;
+    border-radius: 50%;
+    animation: characterBorder 3s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes characterBorder {
     0% {
         transform: rotate(0deg);
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+/* Enhanced buy button with pulse effect */
+.buy-token-btn {
+    position: relative;
+    overflow: visible;
+}
+
+.buy-token-btn::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, #00b894, #00cec9);
+    border-radius: 40px;
+    z-index: -1;
+    animation: buttonPulse 2s ease-in-out infinite;
+    opacity: 0.5;
+}
+
+@keyframes buttonPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Mobile responsiveness for comic effects */
+@media (max-width: 768px) {
+    .pow-effect, .boom-effect, .zap-effect {
+        font-size: 2rem;
+    }
+    
+    .fun-note {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+    
+    .character-image::before {
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border-width: 2px;
     }
 }

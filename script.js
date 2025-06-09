@@ -1,10 +1,10 @@
-// Глобальные переменные
+// Global Variables
 let marketCap = 1234567;
 let gretaSupport = 0;
 let israelSupport = 0;
-let currentPosition = 10; // Позиция Греты в процентах (10% - начальная позиция)
+let currentPosition = 10; // Greta's position in percentage (10% - starting position)
 
-// Элементы DOM
+// DOM Elements
 const marketCapElement = document.getElementById('marketCap');
 const gretaSupportElement = document.getElementById('gretaSupport');
 const israelSupportElement = document.getElementById('israelSupport');
@@ -13,45 +13,77 @@ const gretaElement = document.getElementById('greta');
 const israelElement = document.getElementById('israelCharacter');
 const clickIndicator = document.getElementById('clickIndicator');
 
-// Инициализация
+// Fun Sound Effects (text-based)
+const soundEffects = {
+    greta: ['💥 BOOM!', '🌱 ECO POWER!', '🔥 HOW DARE YOU!', '⚡ CLIMATE STRIKE!'],
+    israel: ['🏛️ DEMOCRACY!', '💪 STRONG!', '🛡️ DEFEND!', '⭐ BIBI POWER!'],
+    achievement: ['🎉 AWESOME!', '🏆 LEGENDARY!', '⚡ EPIC WIN!', '🌟 AMAZING!']
+};
+
+// Initialize
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     setupEventListeners();
     startMarketCapSimulation();
+    createFloatingEmojis();
+    showWelcomeMessage();
 });
+
+function showWelcomeMessage() {
+    setTimeout(() => {
+        showAchievement('Welcome to the Epic Battle!', '🎮');
+    }, 1000);
+}
 
 function initializeApp() {
     updateMarketCapDisplay();
     updateCharacterPositions();
     updateCharacterEmotions();
+    addCharacterSpeechBubbles();
 }
 
 function setupEventListeners() {
-    // Клик по Грете для поддержки
+    // Click on Greta for support
     gretaElement.addEventListener('click', function(e) {
         e.stopPropagation();
         supportGreta();
-        showClickEffect(e, 'Грета +1!', '#2196F3');
+        const effect = soundEffects.greta[Math.floor(Math.random() * soundEffects.greta.length)];
+        showClickEffect(e, effect, '#00b894');
+        makeCharacterSpeak(gretaElement, 'YES! SAVE THE PLANET!');
     });
 
-    // Клик по персонажу Израиля для поддержки
+    // Click on Israeli character for support
     israelElement.addEventListener('click', function(e) {
         e.stopPropagation();
         supportIsrael();
-        showClickEffect(e, 'Израиль +1!', '#4CAF50');
+        const effect = soundEffects.israel[Math.floor(Math.random() * soundEffects.israel.length)];
+        showClickEffect(e, effect, '#e17055');
+        makeCharacterSpeak(israelElement, 'NOT ON MY WATCH!');
     });
 
-    // Клик по зоне Греты (левая половина экрана)
+    // Click on Greta's zone (left half of screen)
     document.addEventListener('click', function(e) {
         const screenWidth = window.innerWidth;
         if (e.clientX < screenWidth / 2) {
             supportGreta();
-            showClickEffect(e, 'Грета +1!', '#2196F3');
+            showClickEffect(e, 'Team Greta +1! 🌱', '#00b894');
         } else {
             supportIsrael();
-            showClickEffect(e, 'Израиль +1!', '#4CAF50');
+            showClickEffect(e, 'Team Israel +1! 🏛️', '#e17055');
         }
     });
+}
+
+function makeCharacterSpeak(character, text) {
+    character.classList.add('active');
+    const bubble = character.querySelector('.speech-bubble');
+    if (bubble) {
+        bubble.textContent = text;
+    }
+    
+    setTimeout(() => {
+        character.classList.remove('active');
+    }, 2000);
 }
 
 function supportGreta() {
@@ -59,9 +91,13 @@ function supportGreta() {
     const increase = Math.floor(Math.random() * 50000) + 10000;
     marketCap += increase;
     
-    // Специальные эффекты при достижении целей
+    // Special effects for milestones
+    if (gretaSupport % 5 === 0) {
+        createEcoConfetti(window.innerWidth / 4, window.innerHeight / 2);
+    }
+    
     if (gretaSupport % 10 === 0) {
-        createConfetti(window.innerWidth / 4, window.innerHeight / 2, '#2196F3');
+        createSpecialEffect('eco');
     }
     
     updateDisplays();
@@ -75,9 +111,13 @@ function supportIsrael() {
     marketCap -= decrease;
     if (marketCap < 0) marketCap = 0;
     
-    // Специальные эффекты при достижении целей
+    // Special effects for milestones
+    if (israelSupport % 5 === 0) {
+        createPatrioticConfetti(window.innerWidth * 3/4, window.innerHeight / 2);
+    }
+    
     if (israelSupport % 10 === 0) {
-        createConfetti(window.innerWidth * 3/4, window.innerHeight / 2, '#4CAF50');
+        createSpecialEffect('patriotic');
     }
     
     updateDisplays();
@@ -94,7 +134,7 @@ function updateDisplays() {
     gretaSupportElement.textContent = gretaSupport;
     israelSupportElement.textContent = israelSupport;
     
-    // Анимация изменений
+    // Pulse animations for changes
     if (oldMarketCap !== marketCapElement.textContent) {
         pulseCounter(document.querySelector('.market-cap-display'));
     }
@@ -107,9 +147,9 @@ function updateDisplays() {
 }
 
 function updateCharacterPositions() {
-    // Расчет позиции Греты на основе Market Cap
-    // Базовый Market Cap: 500,000 - 10% позиция
-    // Максимальный Market Cap: 5,000,000 - 90% позиция
+    // Calculate Greta's position based on Market Cap
+    // Base Market Cap: 100,000 - 10% position
+    // Maximum Market Cap: 5,000,000 - 85% position
     const minCap = 100000;
     const maxCap = 5000000;
     const minPosition = 10;
@@ -123,30 +163,46 @@ function updateCharacterPositions() {
 }
 
 function updateCharacterEmotions() {
-    // Эмоции Греты: радость если ближе к Газе (позиция > 50%)
+    // Greta's emotions: happy if closer to Gaza (position > 50%)
     if (currentPosition > 50) {
         gretaElement.className = 'greta-character happy';
+        makeCharacterSpeak(gretaElement, 'ALMOST THERE! 🚢');
     } else {
         gretaElement.className = 'greta-character sad';
+        makeCharacterSpeak(gretaElement, 'SO FAR... 😢');
     }
     
-    // Эмоции персонажа Израиля: злость если Грета близко к Газе
+    // Israeli character emotions: angry if Greta is close to Gaza
     if (currentPosition > 50) {
         israelElement.className = 'israel-character angry';
+        makeCharacterSpeak(israelElement, 'OH NO! 😡');
     } else {
         israelElement.className = 'israel-character happy';
+        makeCharacterSpeak(israelElement, 'PHEW! 😌');
     }
 }
 
+function addCharacterSpeechBubbles() {
+    // Add speech bubbles if they don't exist
+    [gretaElement, israelElement].forEach(character => {
+        if (!character.querySelector('.speech-bubble')) {
+            const bubble = document.createElement('div');
+            bubble.className = 'speech-bubble';
+            bubble.textContent = 'Click me!';
+            character.appendChild(bubble);
+        }
+    });
+}
+
 function showClickEffect(event, text, color) {
-    // Основной текстовый эффект
+    // Main text effect
     clickIndicator.textContent = text;
     clickIndicator.style.color = color;
     clickIndicator.style.left = event.clientX + 'px';
     clickIndicator.style.top = event.clientY + 'px';
     clickIndicator.classList.add('show');
     
-    // Дополнительный визуальный эффект
+    // Additional ripple effect
     const ripple = document.createElement('div');
     ripple.style.cssText = `
         position: fixed;
@@ -159,14 +215,14 @@ function showClickEffect(event, text, color) {
         opacity: 0.6;
         pointer-events: none;
         z-index: 999;
-        animation: ripple 0.6s ease-out;
+        animation: comicRipple 0.8s ease-out;
     `;
     document.body.appendChild(ripple);
     
     setTimeout(() => {
         clickIndicator.classList.remove('show');
         ripple.remove();
-    }, 800);
+    }, 1000);
 }
 
 function formatNumber(num) {
@@ -182,10 +238,10 @@ function updateMarketCapDisplay() {
     marketCapElement.textContent = '$' + formatNumber(marketCap);
 }
 
-// Симуляция изменения Market Cap
+// Market Cap simulation
 function startMarketCapSimulation() {
     setInterval(() => {
-        // Случайные изменения Market Cap для демонстрации
+        // Random Market Cap changes for demonstration
         const change = (Math.random() - 0.5) * 20000;
         marketCap += change;
         if (marketCap < 50000) marketCap = 50000;
@@ -194,98 +250,177 @@ function startMarketCapSimulation() {
         updateMarketCapDisplay();
         updateCharacterPositions();
         updateCharacterEmotions();
-    }, 3000); // Обновление каждые 3 секунды
+    }, 4000); // Update every 4 seconds
 }
 
-// Функция для анимации волн (дополнительный эффект)
-function createWaveEffect() {
-    const journeyZone = document.querySelector('.journey-zone');
-    const wave = document.createElement('div');
-    wave.className = 'wave-effect';
-    wave.style.cssText = `
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 20px;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        animation: wave 2s ease-in-out infinite;
-        pointer-events: none;
-    `;
-    journeyZone.appendChild(wave);
+// Fun floating emojis
+function createFloatingEmojis() {
+    const emojis = ['🌍', '🌱', '⚡', '🌊', '🏛️', '⭐', '🔥', '💫'];
+    const container = document.querySelector('.floating-emojis');
     
-    // Удаление элемента после анимации
-    setTimeout(() => {
-        wave.remove();
-    }, 2000);
+    setInterval(() => {
+        const emoji = document.createElement('div');
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.cssText = `
+            position: absolute;
+            font-size: 2rem;
+            left: ${Math.random() * 100}%;
+            animation: floatUp 10s linear infinite;
+            pointer-events: none;
+            opacity: 0.3;
+        `;
+        container.appendChild(emoji);
+        
+        setTimeout(() => emoji.remove(), 10000);
+    }, 3000);
 }
 
-// CSS анимация для волн (добавляется динамически)
-const waveKeyframes = `
-    @keyframes wave {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-    }
-`;
-
-// Добавление стилей для волн
-const style = document.createElement('style');
-style.textContent = waveKeyframes;
-document.head.appendChild(style);
-
-// Создание волн периодически
-setInterval(createWaveEffect, 5000);
-
-// Дополнительные визуальные эффекты
-function addParticleEffect(x, y, color) {
-    for (let i = 0; i < 5; i++) {
-        const particle = document.createElement('div');
-        particle.style.cssText = `
+// Eco-themed confetti
+function createEcoConfetti(x, y) {
+    const ecoEmojis = ['🌱', '🌍', '♻️', '🌿', '🍃', '💚'];
+    for (let i = 0; i < 15; i++) {
+        const confetti = document.createElement('div');
+        confetti.textContent = ecoEmojis[Math.floor(Math.random() * ecoEmojis.length)];
+        confetti.style.cssText = `
             position: fixed;
-            left: ${x}px;
-            top: ${y}px;
-            width: 4px;
-            height: 4px;
-            background: ${color};
-            border-radius: 50%;
+            left: ${x + Math.random() * 60 - 30}px;
+            top: ${y + Math.random() * 60 - 30}px;
+            font-size: 1.5rem;
             pointer-events: none;
             z-index: 1000;
-            animation: particle 1s ease-out forwards;
+            animation: ecoConfetti 3s ease-out forwards;
         `;
-        document.body.appendChild(particle);
+        document.body.appendChild(confetti);
         
-        setTimeout(() => particle.remove(), 1000);
+        setTimeout(() => confetti.remove(), 3000);
     }
 }
 
-// CSS для частиц
-const particleKeyframes = `
-    @keyframes particle {
-        0% {
-            transform: translate(0, 0) scale(1);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(0);
-            opacity: 0;
-        }
+// Patriotic confetti
+function createPatrioticConfetti(x, y) {
+    const patrioticEmojis = ['🏛️', '⭐', '🛡️', '🗽', '🦅', '💙'];
+    for (let i = 0; i < 15; i++) {
+        const confetti = document.createElement('div');
+        confetti.textContent = patrioticEmojis[Math.floor(Math.random() * patrioticEmojis.length)];
+        confetti.style.cssText = `
+            position: fixed;
+            left: ${x + Math.random() * 60 - 30}px;
+            top: ${y + Math.random() * 60 - 30}px;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 1000;
+            animation: patrioticConfetti 3s ease-out forwards;
+        `;
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 3000);
     }
-`;
+}
 
-const particleStyle = document.createElement('style');
-particleStyle.textContent = particleKeyframes;
-document.head.appendChild(particleStyle);
+// Special effects for milestones
+function createSpecialEffect(type) {
+    const effect = document.createElement('div');
+    effect.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3rem;
+        font-weight: bold;
+        z-index: 1000;
+        pointer-events: none;
+        animation: specialEffect 2s ease-out forwards;
+    `;
+    
+    if (type === 'eco') {
+        effect.textContent = '🌱 ECO POWER ACTIVATED! 🌱';
+        effect.style.color = '#00b894';
+    } else {
+        effect.textContent = '🏛️ DEMOCRACY FORCE! 🏛️';
+        effect.style.color = '#e17055';
+    }
+    
+    document.body.appendChild(effect);
+    setTimeout(() => effect.remove(), 2000);
+}
 
-// Обновленные обработчики кликов с частицами
-gretaElement.addEventListener('click', function(e) {
-    addParticleEffect(e.clientX, e.clientY, '#2196F3');
-});
+// Achievement system
+function showAchievement(text, icon) {
+    const achievement = document.createElement('div');
+    achievement.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        color: #2d3436;
+        padding: 20px 25px;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        z-index: 1000;
+        animation: achievementSlide 4s ease-out forwards;
+        border: 4px solid #2d3436;
+        box-shadow: 6px 6px 0px #fdcb6e;
+        font-family: 'Fredoka One', cursive;
+        max-width: 300px;
+        text-align: center;
+    `;
+    achievement.innerHTML = `${icon}<br>${text}`;
+    document.body.appendChild(achievement);
+    
+    setTimeout(() => achievement.remove(), 4000);
+}
 
-israelElement.addEventListener('click', function(e) {
-    addParticleEffect(e.clientX, e.clientY, '#4CAF50');
-});
+function checkAchievements() {
+    if (gretaSupport === 5) {
+        showAchievement('First Climate Warrior!', '🌱');
+    }
+    if (gretaSupport === 15) {
+        showAchievement('Eco Squad Leader!', '⚡');
+    }
+    if (gretaSupport === 25) {
+        showAchievement('Planet Defender!', '🌍');
+    }
+    if (gretaSupport === 50) {
+        showAchievement('Climate Strike Force!', '💪');
+    }
+    if (gretaSupport === 100) {
+        showAchievement('ECO LEGEND STATUS!', '👑');
+    }
+    
+    if (israelSupport === 5) {
+        showAchievement('Democracy Supporter!', '🏛️');
+    }
+    if (israelSupport === 15) {
+        showAchievement('Freedom Fighter!', '⭐');
+    }
+    if (israelSupport === 25) {
+        showAchievement('Liberty Guardian!', '🛡️');
+    }
+    if (israelSupport === 50) {
+        showAchievement('Democratic Force!', '💪');
+    }
+    if (israelSupport === 100) {
+        showAchievement('DEMOCRACY CHAMPION!', '👑');
+    }
+    
+    // Position-based achievements
+    if (currentPosition >= 80 && !window.nearGoalAchievement) {
+        showAchievement('SO CLOSE TO GAZA!', '🚢');
+        window.nearGoalAchievement = true;
+    }
+    if (currentPosition <= 15 && !window.farAwayAchievement) {
+        showAchievement('Far from the goal!', '⚠️');
+        window.farAwayAchievement = true;
+    }
+    
+    // Battle achievements
+    if (gretaSupport === israelSupport && gretaSupport > 10) {
+        showAchievement('EPIC TIE BATTLE!', '⚖️');
+    }
+}
 
-// Функция для отображения статуса путешествия
+// Journey status updates
 function updateJourneyStatus() {
     const journeyZone = document.querySelector('.journey-zone');
     let statusElement = document.getElementById('journeyStatus');
@@ -295,16 +430,20 @@ function updateJourneyStatus() {
         statusElement.id = 'journeyStatus';
         statusElement.style.cssText = `
             position: absolute;
-            top: -80px;
+            top: -90px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            background: white;
+            color: #2d3436;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
             text-align: center;
-            backdrop-filter: blur(10px);
+            border: 3px solid #2d3436;
+            box-shadow: 4px 4px 0px #fdcb6e;
+            font-family: 'Fredoka One', cursive;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
         `;
         journeyZone.appendChild(statusElement);
@@ -312,151 +451,35 @@ function updateJourneyStatus() {
     
     let statusText = '';
     if (currentPosition < 25) {
-        statusText = '🚢 Грета далеко от цели';
+        statusText = '🚢 Far from Gaza!';
+        statusElement.style.background = '#ff6b6b';
+        statusElement.style.color = 'white';
     } else if (currentPosition < 50) {
-        statusText = '⛵ Грета приближается';
+        statusText = '⛵ Getting Closer!';
+        statusElement.style.background = '#ffeaa7';
+        statusElement.style.color = '#2d3436';
     } else if (currentPosition < 75) {
-        statusText = '🏃‍♀️ Грета почти у цели!';
+        statusText = '🏃‍♀️ Almost There!';
+        statusElement.style.background = '#fdcb6e';
+        statusElement.style.color = '#2d3436';
     } else {
-        statusText = '🎯 Грета очень близко к Газе!';
+        statusText = '🎯 SO CLOSE TO GAZA!';
+        statusElement.style.background = '#00b894';
+        statusElement.style.color = 'white';
     }
     
     statusElement.textContent = statusText;
 }
 
-// Обновление статуса при изменении позиции
-const originalUpdateCharacterPositions = updateCharacterPositions;
-updateCharacterPositions = function() {
-    originalUpdateCharacterPositions();
-    updateJourneyStatus();
-};
-
-// Инициализация статуса
-setTimeout(updateJourneyStatus, 100);
-
-// Функция для пульсации счетчиков
+// Counter pulse animation
 function pulseCounter(counterElement) {
     counterElement.classList.add('updated');
     setTimeout(() => {
         counterElement.classList.remove('updated');
-    }, 500);
+    }, 600);
 }
 
-// Функция для создания конфетти
-function createConfetti(x, y, color) {
-    for (let i = 0; i < 10; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.cssText = `
-            position: fixed;
-            left: ${x + Math.random() * 40 - 20}px;
-            top: ${y + Math.random() * 40 - 20}px;
-            width: 6px;
-            height: 6px;
-            background: ${color};
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1000;
-            animation: confetti 2s ease-out forwards;
-        `;
-        document.body.appendChild(confetti);
-        
-        setTimeout(() => confetti.remove(), 2000);
-    }
-}
-
-// CSS для конфетти
-const confettiKeyframes = `
-    @keyframes confetti {
-        0% {
-            transform: translate(0, 0) rotate(0deg) scale(1);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 + 100}px) rotate(720deg) scale(0);
-            opacity: 0;
-        }
-    }
-`;
-
-const confettiStyle = document.createElement('style');
-confettiStyle.textContent = confettiKeyframes;
-document.head.appendChild(confettiStyle);
-
-// Функция для отображения достижений
-function showAchievement(text, icon) {
-    const achievement = document.createElement('div');
-    achievement.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: rgba(0,0,0,0.8);
-        color: #FFD700;
-        padding: 15px 20px;
-        border-radius: 10px;
-        font-size: 1.1rem;
-        font-weight: bold;
-        z-index: 1000;
-        animation: achievementSlide 3s ease-out forwards;
-        backdrop-filter: blur(10px);
-        border: 2px solid #FFD700;
-    `;
-    achievement.innerHTML = `${icon} ${text}`;
-    document.body.appendChild(achievement);
-    
-    setTimeout(() => achievement.remove(), 3000);
-}
-
-// CSS для достижений
-const achievementKeyframes = `
-    @keyframes achievementSlide {
-        0% {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        10%, 90% {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        100% {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-`;
-
-const achievementStyle = document.createElement('style');
-achievementStyle.textContent = achievementKeyframes;
-document.head.appendChild(achievementStyle);
-
-// Проверка достижений
-function checkAchievements() {
-    if (gretaSupport === 25) {
-        showAchievement('Первый сторонник Греты!', '🎉');
-    }
-    if (gretaSupport === 50) {
-        showAchievement('Грета набирает популярность!', '🌟');
-    }
-    if (gretaSupport === 100) {
-        showAchievement('Сотня сторонников Греты!', '🏆');
-    }
-    if (israelSupport === 25) {
-        showAchievement('Поддержка Израиля растет!', '🎉');
-    }
-    if (israelSupport === 50) {
-        showAchievement('Сильная поддержка Израиля!', '🌟');
-    }
-    if (israelSupport === 100) {
-        showAchievement('Сотня сторонников Израиля!', '🏆');
-    }
-    if (currentPosition >= 80) {
-        showAchievement('Грета почти у цели!', '🚢');
-    }
-    if (currentPosition <= 15) {
-        showAchievement('Грета далеко от цели', '⚠️');
-    }
-}
-
-// Обновляю оригинальные функции поддержки
+// Update original functions with achievement checks
 const originalSupportGreta = supportGreta;
 const originalSupportIsrael = supportIsrael;
 
@@ -470,30 +493,114 @@ supportIsrael = function() {
     checkAchievements();
 };
 
-// Функция для звуковых эффектов (если нужно)
-function playSound(type) {
-    // Здесь можно добавить воспроизведение звуков
-    // const audio = new Audio(`sounds/${type}.mp3`);
-    // audio.play().catch(e => console.log('Звук не воспроизведен:', e));
-}
+// Enhanced position updates with journey status
+const originalUpdateCharacterPositions = updateCharacterPositions;
+updateCharacterPositions = function() {
+    originalUpdateCharacterPositions();
+    updateJourneyStatus();
+};
 
-// CSS для ripple эффекта
-const rippleKeyframes = `
-    @keyframes ripple {
+// Initialize journey status
+setTimeout(updateJourneyStatus, 500);
+
+// Add dynamic CSS animations
+const additionalKeyframes = `
+    @keyframes comicRipple {
         0% {
             width: 0;
             height: 0;
+            opacity: 0.8;
+        }
+        100% {
+            width: 120px;
+            height: 120px;
+            margin: -60px 0 0 -60px;
+            opacity: 0;
+        }
+    }
+    
+    @keyframes floatUp {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0.3;
+        }
+        50% {
             opacity: 0.6;
         }
         100% {
-            width: 100px;
-            height: 100px;
-            margin: -50px 0 0 -50px;
+            transform: translateY(-20px) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes ecoConfetti {
+        0% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(${Math.random() * 300 - 150}px, ${Math.random() * 300 + 200}px) rotate(720deg) scale(0);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes patrioticConfetti {
+        0% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(${Math.random() * 300 - 150}px, ${Math.random() * 300 + 200}px) rotate(-720deg) scale(0);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes specialEffect {
+        0% {
+            transform: translate(-50%, -50%) scale(0) rotate(0deg);
+            opacity: 0;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(1) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes achievementSlide {
+        0% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        10%, 85% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(100%);
             opacity: 0;
         }
     }
 `;
 
-const rippleStyle = document.createElement('style');
-rippleStyle.textContent = rippleKeyframes;
-document.head.appendChild(rippleStyle);
+const dynamicStyle = document.createElement('style');
+dynamicStyle.textContent = additionalKeyframes;
+document.head.appendChild(dynamicStyle);
+
+// Funny random events
+setInterval(() => {
+    const randomEvents = [
+        () => showAchievement('Random Eco Fact: Trees are cool! 🌳', '💡'),
+        () => showAchievement('Fun Fact: Politics is complicated! 🤯', '💡'),
+        () => showAchievement('The battle continues! ⚔️', '�'),
+        () => showAchievement('Keep clicking for fun! 🎮', '✨')
+    ];
+    
+    if (Math.random() < 0.1) { // 10% chance every interval
+        const randomEvent = randomEvents[Math.floor(Math.random() * randomEvents.length)];
+        randomEvent();
+    }
+}, 15000); // Check every 15 seconds
