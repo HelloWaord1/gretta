@@ -1,0 +1,9 @@
+{
+  "git.enabled": true,
+  "git.autoRefresh": true,
+  "git.autoRepositoryDetection": true,
+  "git.scanRepositories": [
+    "./"
+  ],
+  "git.detectSubmodules": true
+} 
