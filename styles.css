@@ -1,0 +1,684 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Заголовок */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+/* Market Cap секция */
+.market-cap-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.market-cap-display {
+    background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,165,0,0.2));
+    padding: 15px 30px;
+    border-radius: 50px;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,215,0,0.5);
+    box-shadow: 0 0 20px rgba(255,215,0,0.3);
+}
+
+.market-cap-display .label {
+    font-size: 1.1rem;
+    margin-right: 10px;
+}
+
+.market-cap-display .value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+/* Зона путешествия */
+.journey-zone {
+    margin: 50px 0;
+    position: relative;
+    height: 200px;
+}
+
+.journey-line {
+    position: relative;
+    height: 4px;
+    background: linear-gradient(90deg, #4CAF50 0%, #FF5722 100%);
+    margin: 100px 50px;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.start-point, .end-point {
+    position: absolute;
+    top: -40px;
+    background: rgba(255,255,255,0.9);
+    color: #333;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.start-point {
+    left: -25px;
+}
+
+.end-point {
+    right: -25px;
+}
+
+/* Лодка и Грета */
+.boat {
+    position: absolute;
+    top: -50px;
+    left: 10%;
+    transition: left 1s ease-in-out;
+    z-index: 10;
+}
+
+.greta-character {
+    position: relative;
+    width: 60px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.greta-face {
+    width: 40px;
+    height: 40px;
+    background: #FDBCB4;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto 5px;
+    border: 2px solid #333;
+}
+
+.eyes {
+    position: absolute;
+    top: 12px;
+    width: 100%;
+}
+
+.eye {
+    width: 6px;
+    height: 6px;
+    background: #333;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.eye.left {
+    left: 8px;
+}
+
+.eye.right {
+    right: 8px;
+}
+
+.mouth {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 6px;
+    border: 2px solid #333;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    transition: all 0.3s ease;
+}
+
+.greta-body {
+    width: 50px;
+    height: 35px;
+    background: #2196F3;
+    border-radius: 25px 25px 10px 10px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.greta-body::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 8px;
+    background: #8B4513;
+    border-radius: 20px;
+}
+
+.greta-body::after {
+    content: '⛵';
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    z-index: 1;
+}
+
+/* Эмоции Греты */
+.greta-character.happy .mouth {
+    border-top: 2px solid #333;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+}
+
+.greta-character.happy .greta-character {
+    animation: bounce 1s infinite;
+}
+
+.greta-character.happy .greta-face::after {
+    content: '😊';
+    position: absolute;
+    top: -5px;
+    right: -20px;
+    font-size: 1.2rem;
+    animation: float 2s ease-in-out infinite;
+}
+
+.greta-character.sad .mouth {
+    border-radius: 0 0 12px 12px;
+    border-top: none;
+}
+
+.greta-character.sad .eye {
+    animation: blink 2s infinite;
+}
+
+.greta-character.sad .greta-face::after {
+    content: '😢';
+    position: absolute;
+    top: -5px;
+    right: -20px;
+    font-size: 1.2rem;
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Персонаж Израиля */
+.israel-character-section {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.israel-character {
+    width: 80px;
+    height: 100px;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.israel-face {
+    width: 50px;
+    height: 50px;
+    background: #FDBCB4;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto 10px;
+    border: 2px solid #333;
+}
+
+.israel-character .eyes {
+    position: absolute;
+    top: 15px;
+    width: 100%;
+}
+
+.israel-character .eye {
+    width: 8px;
+    height: 8px;
+    background: #333;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.israel-character .eye.left {
+    left: 10px;
+}
+
+.israel-character .eye.right {
+    right: 10px;
+}
+
+.israel-character .mouth {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 8px;
+    border: 2px solid #333;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    transition: all 0.3s ease;
+}
+
+.israel-body {
+    width: 60px;
+    height: 40px;
+    background: #4CAF50;
+    border-radius: 30px 30px 15px 15px;
+    margin: 0 auto;
+}
+
+/* Эмоции персонажа Израиля */
+.israel-character.angry {
+    animation: shake 0.5s infinite;
+}
+
+.israel-character.angry .mouth {
+    border-top: 2px solid #333;
+    border-bottom: none;
+    border-radius: 16px 16px 0 0;
+    background: #FF0000;
+}
+
+.israel-character.angry .eye {
+    background: #FF0000;
+}
+
+.israel-character.angry .israel-face::after {
+    content: '😡';
+    position: absolute;
+    top: -5px;
+    right: -20px;
+    font-size: 1.2rem;
+    animation: float 2s ease-in-out infinite;
+}
+
+.israel-character.happy .mouth {
+    border-top: 2px solid #333;
+    border-bottom: none;
+    border-radius: 16px 16px 0 0;
+}
+
+.israel-character.happy .israel-face::after {
+    content: '😌';
+    position: absolute;
+    top: -5px;
+    right: -20px;
+    font-size: 1.2rem;
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Счетчики поддержки */
+.support-counters {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px 0;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.counter {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.2);
+    min-width: 200px;
+}
+
+.counter-label {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.counter-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+.greta-counter {
+    border-color: #2196F3;
+}
+
+.israel-counter {
+    border-color: #4CAF50;
+}
+
+/* Социальные кнопки */
+.social-section {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.social-btn {
+    padding: 12px 24px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-btn:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+}
+
+.social-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.social-btn:hover::before {
+    left: 100%;
+}
+
+.telegram { border-color: #0088cc; }
+.twitter { border-color: #1da1f2; }
+.discord { border-color: #7289da; }
+
+.buy-token-btn {
+    padding: 15px 40px;
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #333;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.buy-token-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+}
+
+.buy-token-btn::after {
+    content: '🚀';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.buy-token-btn:hover::after {
+    transform: translateY(-50%) translateX(5px);
+}
+
+/* Индикатор кликов */
+.click-indicator {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    transition: all 0.5s ease;
+}
+
+.click-indicator.show {
+    opacity: 1;
+    animation: clickPop 0.8s ease-out;
+}
+
+/* Анимации */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+@keyframes blink {
+    0%, 90%, 100% { opacity: 1; }
+    95% { opacity: 0; }
+}
+
+@keyframes clickPop {
+    0% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2) translateY(-10px);
+    }
+    100% {
+        transform: scale(1) translateY(-30px);
+        opacity: 0;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .journey-line {
+        margin: 100px 20px;
+    }
+    
+    .support-counters {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .social-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .counter {
+        min-width: 250px;
+    }
+}
+
+/* Волны на фоне */
+.journey-zone::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        rgba(135, 206, 235, 0.3) 10px,
+        transparent 20px
+    );
+    animation: waves 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes waves {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+}
+
+/* Звездное небо на фоне */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.9), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: starTwinkle 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes starTwinkle {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Пульсация для счетчиков при обновлении */
+.counter.updated {
+    animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255,215,0,0.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Дополнительные эмоции для глаз */
+.greta-character.happy .eye {
+    animation: happyEyes 2s ease-in-out infinite;
+}
+
+.israel-character.angry .eye {
+    background: #FF4444;
+    animation: angryEyes 0.3s ease-in-out infinite;
+}
+
+@keyframes happyEyes {
+    0%, 90%, 100% {
+        transform: scaleY(1);
+    }
+    95% {
+        transform: scaleY(0.1);
+    }
+}
+
+@keyframes angryEyes {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Индикатор загрузки для Market Cap */
+.market-cap-display::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+    border-radius: 52px;
+    z-index: -1;
+    animation: marketCapGlow 2s linear infinite;
+}
+
+@keyframes marketCapGlow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

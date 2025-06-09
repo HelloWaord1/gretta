@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrettaCap Voyage</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Заголовок -->
+        <header class="header">
+            <h1>GrettaCap Voyage</h1>
+            <p class="subtitle">Чем выше Market Cap, тем ближе Грета к Газе!</p>
+        </header>
+
+        <!-- Market Cap индикатор -->
+        <div class="market-cap-section">
+            <div class="market-cap-display">
+                <span class="label">Market Cap:</span>
+                <span id="marketCap" class="value">$1,234,567</span>
+            </div>
+        </div>
+
+        <!-- Зона путешествия -->
+        <div class="journey-zone">
+            <div class="journey-line">
+                <div class="start-point">
+                    <span>Старт</span>
+                </div>
+                <div class="end-point">
+                    <span>Газа</span>
+                </div>
+                
+                <!-- Лодка с Гретой -->
+                <div id="boat" class="boat">
+                    <div id="greta" class="greta-character">
+                        <div class="greta-face">
+                            <div class="eyes">
+                                <div class="eye left"></div>
+                                <div class="eye right"></div>
+                            </div>
+                            <div class="mouth"></div>
+                        </div>
+                        <div class="greta-body"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Персонаж Израиля -->
+        <div class="israel-character-section">
+            <div id="israelCharacter" class="israel-character">
+                <div class="israel-face">
+                    <div class="eyes">
+                        <div class="eye left"></div>
+                        <div class="eye right"></div>
+                    </div>
+                    <div class="mouth"></div>
+                </div>
+                <div class="israel-body"></div>
+            </div>
+        </div>
+
+        <!-- Счетчики поддержки -->
+        <div class="support-counters">
+            <div class="counter greta-counter">
+                <div class="counter-label">Поддержка Греты</div>
+                <div id="gretaSupport" class="counter-value">0</div>
+            </div>
+            <div class="counter israel-counter">
+                <div class="counter-label">Поддержка Израиля</div>
+                <div id="israelSupport" class="counter-value">0</div>
+            </div>
+        </div>
+
+        <!-- Социальные кнопки -->
+        <footer class="social-section">
+            <div class="social-buttons">
+                <a href="#" class="social-btn telegram">Telegram</a>
+                <a href="#" class="social-btn twitter">Twitter</a>
+                <a href="#" class="social-btn discord">Discord</a>
+            </div>
+            <button class="buy-token-btn">Купить токен</button>
+        </footer>
+
+        <!-- Индикатор для кликов -->
+        <div id="clickIndicator" class="click-indicator"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
