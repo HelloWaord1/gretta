@@ -1,0 +1,328 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Заголовок */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+@keyframes glow {
+    from { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,255,255,0.2); }
+    to { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.4); }
+}
+
+/* Market Cap Display */
+.market-cap-display {
+    text-align: center;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.market-cap-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.label {
+    opacity: 0.8;
+    margin-right: 10px;
+}
+
+/* Счетчики поддержки */
+.support-counters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.greta-support, .israel-support {
+    background: rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    flex: 1;
+    text-align: center;
+}
+
+.greta-support {
+    border: 2px solid #4CAF50;
+}
+
+.israel-support {
+    border: 2px solid #2196F3;
+}
+
+/* Игровая зона */
+.game-area {
+    margin-bottom: 40px;
+}
+
+/* Зона путешествия */
+.journey-zone {
+    margin-bottom: 50px;
+    padding: 30px 0;
+}
+
+.journey-line {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+}
+
+.journey-line::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 4px;
+    background: linear-gradient(90deg, #4CAF50 0%, #2196F3 100%);
+    border-radius: 2px;
+    z-index: 1;
+}
+
+.start-point, .end-point {
+    background: rgba(255,255,255,0.2);
+    padding: 15px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 2;
+    position: relative;
+}
+
+.start-point {
+    background: rgba(76, 175, 80, 0.3);
+}
+
+.end-point {
+    background: rgba(244, 67, 54, 0.3);
+}
+
+/* Путь и лодка Греты */
+.journey-path {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100px;
+    z-index: 3;
+}
+
+.greta-boat {
+    position: absolute;
+    left: 20%; /* Начальная позиция */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: left 1s ease-in-out;
+    cursor: pointer;
+}
+
+.boat {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.greta-character {
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+.greta-face {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.greta-body {
+    font-size: 1.5rem;
+}
+
+/* Анимации Греты */
+.greta-character.happy {
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.greta-character.sad {
+    animation: cry 1.5s ease-in-out infinite;
+}
+
+.greta-character.happy .greta-face::before {
+    content: '😊';
+}
+
+.greta-character.sad .greta-face::before {
+    content: '😢';
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+@keyframes cry {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+}
+
+/* Зона Израиля */
+.israel-zone {
+    text-align: center;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+.israel-character {
+    display: inline-block;
+    transition: all 0.5s ease;
+    margin-bottom: 10px;
+}
+
+.israel-face {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.israel-body {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.israel-flag {
+    font-size: 1rem;
+}
+
+.israel-label {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Анимации Израиля */
+.israel-character.calm {
+    animation: none;
+}
+
+.israel-character.angry {
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+.israel-character.calm .israel-face::before {
+    content: '😌';
+}
+
+.israel-character.angry .israel-face::before {
+    content: '😡';
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Социальные ссылки */
+.social-links {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.social-btn {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 2px solid rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.social-btn:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.6);
+    transform: translateY(-2px);
+}
+
+.buy-token-btn {
+    background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.buy-token-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .support-counters {
+        flex-direction: column;
+    }
+    
+    .social-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .social-btn {
+        width: 200px;
+    }
+} 

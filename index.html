@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrettaCap Voyage - Путешествие к Газе</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Заголовок -->
+        <header class="header">
+            <h1>🚢 GrettaCap Voyage</h1>
+            <p class="subtitle">Чем выше Market Cap, тем ближе Грета к Газе!</p>
+        </header>
+
+        <!-- Market Cap индикатор -->
+        <div class="market-cap-display">
+            <div class="market-cap-value">
+                <span class="label">Market Cap:</span>
+                <span id="marketCapValue">$0</span>
+            </div>
+        </div>
+
+        <!-- Счетчики поддержки -->
+        <div class="support-counters">
+            <div class="greta-support">
+                <span>Поддержка Греты: </span>
+                <span id="gretaSupport">0</span>
+            </div>
+            <div class="israel-support">
+                <span>Поддержка Израиля: </span>
+                <span id="israelSupport">0</span>
+            </div>
+        </div>
+
+        <!-- Основная игровая зона -->
+        <div class="game-area">
+            <!-- Путешествие -->
+            <div class="journey-zone">
+                <div class="journey-line">
+                    <div class="start-point">
+                        <span>🏠 Старт</span>
+                    </div>
+                    <div class="journey-path">
+                        <div id="gretaBoat" class="greta-boat">
+                            <div class="boat">🛥️</div>
+                            <div id="gretaCharacter" class="greta-character happy">
+                                <div class="greta-face">😊</div>
+                                <div class="greta-body">👧</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="end-point">
+                        <span>🏴‍☠️ Газа</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Персонаж Израиля -->
+            <div class="israel-zone" id="israelZone">
+                <div id="israelCharacter" class="israel-character calm">
+                    <div class="israel-face">😐</div>
+                    <div class="israel-body">🧔</div>
+                    <div class="israel-flag">🇮🇱</div>
+                </div>
+                <div class="israel-label">Представитель Израиля</div>
+            </div>
+        </div>
+
+        <!-- Социальные ссылки -->
+        <footer class="social-links">
+            <div class="social-buttons">
+                <a href="#" class="social-btn telegram">📱 Telegram</a>
+                <a href="#" class="social-btn twitter">🐦 Twitter</a>
+                <a href="#" class="social-btn discord">💬 Discord</a>
+            </div>
+            <button class="buy-token-btn" id="buyTokenBtn">
+                💰 Купить токен
+            </button>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
