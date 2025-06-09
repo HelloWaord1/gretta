@@ -124,6 +124,16 @@ External APIs (DexScreener, Pump.fun)
 - **Vote Synchronization**: Global state management
 - **Notification System**: Live alerts and updates
 
+### Project Files
+- `index.html` - Main application page
+- `style.css` - Modern CSS with custom properties
+- `script.js` - Client-side game logic and WebSocket handling
+- `server.js` - Node.js server with real-time features
+- `favicon.svg` - Custom SVG favicon with battle theme
+- `manifest.json` - PWA manifest for mobile installation
+- `package.json` - Dependencies and scripts
+- `README.md` - Documentation
+
 ## 🎨 UI/UX Features
 
 - **Glassmorphism**: Modern translucent design
@@ -132,6 +142,9 @@ External APIs (DexScreener, Pump.fun)
 - **Responsive Grid**: Mobile-first approach
 - **Smooth Animations**: 60fps performance
 - **Visual Feedback**: Click effects and notifications
+- **Custom Favicon**: Lightning bolt VS theme with gradient
+- **PWA Ready**: Installable as mobile app with manifest
+- **Progress Markers**: Visual Market Cap indicators on journey track
 
 ## 🔒 Security
 
