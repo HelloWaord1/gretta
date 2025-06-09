@@ -1,23 +1,32 @@
 // Global Variables
 let marketCap = 1234567;
 let gretaSupport = 0;
-let israelSupport = 0;
+let zettaSupport = 0; // Изменил с israelSupport
 let currentPosition = 10; // Greta's position in percentage (10% - starting position)
 
 // DOM Elements
 const marketCapElement = document.getElementById('marketCap');
 const gretaSupportElement = document.getElementById('gretaSupport');
-const israelSupportElement = document.getElementById('israelSupport');
+const zettaSupportElement = document.getElementById('israelSupport'); // Оставляю ID для совместимости
 const boatElement = document.getElementById('boat');
 const gretaElement = document.getElementById('greta');
-const israelElement = document.getElementById('israelCharacter');
+const jewishElement = document.getElementById('jewishCharacter'); // Новый еврейский персонаж
+const jewishEmotionElement = document.getElementById('jewishEmotion');
+const jewishSpeechElement = document.getElementById('jewishSpeech');
 const clickIndicator = document.getElementById('clickIndicator');
 
 // Fun Sound Effects (text-based)
 const soundEffects = {
-    greta: ['💥 BOOM!', '🌱 ECO POWER!', '🔥 HOW DARE YOU!', '⚡ CLIMATE STRIKE!'],
-    israel: ['🏛️ DEMOCRACY!', '💪 STRONG!', '🛡️ DEFEND!', '⭐ BIBI POWER!'],
+    greta: ['💥 CLIMATE POWER!', '🌱 ECO RAGE!', '🔥 HOW DARE YOU!', '⚡ SAVE EARTH!'],
+    zetta: ['💰 MONEY MONEY!', '🏦 OY VEY!', '� BUSINESS!', '📈 PROFIT TIME!'],
     achievement: ['🎉 AWESOME!', '🏆 LEGENDARY!', '⚡ EPIC WIN!', '🌟 AMAZING!']
+};
+
+// Jewish character phrases
+const jewishPhrases = {
+    angry: ['OY VEY!', 'NOT GOOD!', 'BUSINESS BAD!', 'MONEY PROBLEMS!'],
+    happy: ['EXCELLENT!', 'GOOD BUSINESS!', 'PROFIT TIME!', 'MONEY GOOD!'],
+    neutral: ['WAITING...', 'BUSINESS...', 'MONEY...', 'OY...']
 };
 
 // Initialize
@@ -31,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function showWelcomeMessage() {
     setTimeout(() => {
-        showAchievement('Welcome to the Epic Battle!', '🎮');
+        showAchievement('Welcome to Gretta VS Zetta!', '🎮');
     }, 1000);
 }
 
@@ -49,16 +58,16 @@ function setupEventListeners() {
         supportGreta();
         const effect = soundEffects.greta[Math.floor(Math.random() * soundEffects.greta.length)];
         showClickEffect(e, effect, '#00b894');
-        makeCharacterSpeak(gretaElement, 'YES! SAVE THE PLANET!');
+        makeCharacterSpeak(gretaElement, 'YES! TO GAZA!');
     });
 
-    // Click on Israeli character for support
-    israelElement.addEventListener('click', function(e) {
+    // Click on Jewish character (Zetta) for support
+    jewishElement.addEventListener('click', function(e) {
         e.stopPropagation();
-        supportIsrael();
-        const effect = soundEffects.israel[Math.floor(Math.random() * soundEffects.israel.length)];
-        showClickEffect(e, effect, '#e17055');
-        makeCharacterSpeak(israelElement, 'NOT ON MY WATCH!');
+        supportZetta();
+        const effect = soundEffects.zetta[Math.floor(Math.random() * soundEffects.zetta.length)];
+        showClickEffect(e, effect, '#fdcb6e');
+        makeJewishCharacterSpeak('MONEY GOOD!');
     });
 
     // Click on Greta's zone (left half of screen)
@@ -68,8 +77,8 @@ function setupEventListeners() {
             supportGreta();
             showClickEffect(e, 'Team Greta +1! 🌱', '#00b894');
         } else {
-            supportIsrael();
-            showClickEffect(e, 'Team Israel +1! 🏛️', '#e17055');
+            supportZetta();
+            showClickEffect(e, 'Team Zetta +1! 💰', '#fdcb6e');
         }
     });
 }
@@ -83,6 +92,15 @@ function makeCharacterSpeak(character, text) {
     
     setTimeout(() => {
         character.classList.remove('active');
+    }, 2000);
+}
+
+function makeJewishCharacterSpeak(text) {
+    jewishSpeechElement.textContent = text;
+    jewishSpeechElement.classList.add('active');
+    
+    setTimeout(() => {
+        jewishSpeechElement.classList.remove('active');
     }, 2000);
 }
 
@@ -105,19 +123,19 @@ function supportGreta() {
     updateCharacterEmotions();
 }
 
-function supportIsrael() {
-    israelSupport++;
+function supportZetta() {
+    zettaSupport++;
     const decrease = Math.floor(Math.random() * 30000) + 5000;
     marketCap -= decrease;
     if (marketCap < 0) marketCap = 0;
     
     // Special effects for milestones
-    if (israelSupport % 5 === 0) {
-        createPatrioticConfetti(window.innerWidth * 3/4, window.innerHeight / 2);
+    if (zettaSupport % 5 === 0) {
+        createMoneyConfetti(window.innerWidth * 3/4, window.innerHeight / 2);
     }
     
-    if (israelSupport % 10 === 0) {
-        createSpecialEffect('patriotic');
+    if (zettaSupport % 10 === 0) {
+        createSpecialEffect('money');
     }
     
     updateDisplays();
@@ -128,11 +146,11 @@ function supportIsrael() {
 function updateDisplays() {
     const oldMarketCap = marketCapElement.textContent;
     const oldGretaSupport = gretaSupportElement.textContent;
-    const oldIsraelSupport = israelSupportElement.textContent;
+    const oldZettaSupport = zettaSupportElement.textContent;
     
     marketCapElement.textContent = '$' + formatNumber(marketCap);
     gretaSupportElement.textContent = gretaSupport;
-    israelSupportElement.textContent = israelSupport;
+    zettaSupportElement.textContent = zettaSupport;
     
     // Pulse animations for changes
     if (oldMarketCap !== marketCapElement.textContent) {
@@ -141,15 +159,13 @@ function updateDisplays() {
     if (oldGretaSupport !== gretaSupportElement.textContent) {
         pulseCounter(document.querySelector('.greta-counter'));
     }
-    if (oldIsraelSupport !== israelSupportElement.textContent) {
-        pulseCounter(document.querySelector('.israel-counter'));
+    if (oldZettaSupport !== zettaSupportElement.textContent) {
+        pulseCounter(document.querySelector('.zetta-counter'));
     }
 }
 
 function updateCharacterPositions() {
     // Calculate Greta's position based on Market Cap
-    // Base Market Cap: 100,000 - 10% position
-    // Maximum Market Cap: 5,000,000 - 85% position
     const minCap = 100000;
     const maxCap = 5000000;
     const minPosition = 10;
@@ -163,28 +179,41 @@ function updateCharacterPositions() {
 }
 
 function updateCharacterEmotions() {
-    // Greta's emotions: happy if closer to Gaza (position > 50%)
+    // ИСПРАВЛЕННАЯ ЛОГИКА:
+    // Greta's emotions: HAPPY when closer to Gaza (position > 50%), ANGRY when far
     if (currentPosition > 50) {
         gretaElement.className = 'greta-character happy';
-        makeCharacterSpeak(gretaElement, 'ALMOST THERE! 🚢');
+        makeCharacterSpeak(gretaElement, 'YES! ALMOST GAZA! 🚢');
+        
+        // Update backup Greta face
+        const backupFace = gretaElement.querySelector('.backup-greta .greta-face');
+        if (backupFace) backupFace.textContent = '😊';
     } else {
-        gretaElement.className = 'greta-character sad';
-        makeCharacterSpeak(gretaElement, 'SO FAR... 😢');
+        gretaElement.className = 'greta-character angry';
+        makeCharacterSpeak(gretaElement, 'SO FAR FROM GAZA! �');
+        
+        // Update backup Greta face  
+        const backupFace = gretaElement.querySelector('.backup-greta .greta-face');
+        if (backupFace) backupFace.textContent = '😡';
     }
     
-    // Israeli character emotions: angry if Greta is close to Gaza
+    // Jewish character emotions: ANGRY when Greta is close to Gaza, HAPPY when far
     if (currentPosition > 50) {
-        israelElement.className = 'israel-character angry';
-        makeCharacterSpeak(israelElement, 'OH NO! 😡');
+        jewishElement.className = 'jewish-character angry';
+        jewishEmotionElement.textContent = '😤💢';
+        const phrase = jewishPhrases.angry[Math.floor(Math.random() * jewishPhrases.angry.length)];
+        makeJewishCharacterSpeak(phrase);
     } else {
-        israelElement.className = 'israel-character happy';
-        makeCharacterSpeak(israelElement, 'PHEW! 😌');
+        jewishElement.className = 'jewish-character happy';
+        jewishEmotionElement.textContent = '😊💰';
+        const phrase = jewishPhrases.happy[Math.floor(Math.random() * jewishPhrases.happy.length)];
+        makeJewishCharacterSpeak(phrase);
     }
 }
 
 function addCharacterSpeechBubbles() {
     // Add speech bubbles if they don't exist
-    [gretaElement, israelElement].forEach(character => {
+    [gretaElement].forEach(character => {
         if (!character.querySelector('.speech-bubble')) {
             const bubble = document.createElement('div');
             bubble.className = 'speech-bubble';
@@ -255,7 +284,7 @@ function startMarketCapSimulation() {
 
 // Fun floating emojis
 function createFloatingEmojis() {
-    const emojis = ['🌍', '🌱', '⚡', '🌊', '🏛️', '⭐', '🔥', '💫'];
+    const emojis = ['🌍', '🌱', '⚡', '🌊', '💰', '🎩', '🔥', '💫'];
     const container = document.querySelector('.floating-emojis');
     
     setInterval(() => {
@@ -296,12 +325,12 @@ function createEcoConfetti(x, y) {
     }
 }
 
-// Patriotic confetti
-function createPatrioticConfetti(x, y) {
-    const patrioticEmojis = ['🏛️', '⭐', '🛡️', '🗽', '🦅', '💙'];
+// Money-themed confetti for Zetta
+function createMoneyConfetti(x, y) {
+    const moneyEmojis = ['💰', '💎', '🏦', '�', '💵', '�'];
     for (let i = 0; i < 15; i++) {
         const confetti = document.createElement('div');
-        confetti.textContent = patrioticEmojis[Math.floor(Math.random() * patrioticEmojis.length)];
+        confetti.textContent = moneyEmojis[Math.floor(Math.random() * moneyEmojis.length)];
         confetti.style.cssText = `
             position: fixed;
             left: ${x + Math.random() * 60 - 30}px;
@@ -309,7 +338,7 @@ function createPatrioticConfetti(x, y) {
             font-size: 1.5rem;
             pointer-events: none;
             z-index: 1000;
-            animation: patrioticConfetti 3s ease-out forwards;
+            animation: moneyConfetti 3s ease-out forwards;
         `;
         document.body.appendChild(confetti);
         
@@ -336,8 +365,8 @@ function createSpecialEffect(type) {
         effect.textContent = '🌱 ECO POWER ACTIVATED! 🌱';
         effect.style.color = '#00b894';
     } else {
-        effect.textContent = '🏛️ DEMOCRACY FORCE! 🏛️';
-        effect.style.color = '#e17055';
+        effect.textContent = '💰 MONEY POWER ACTIVATED! 💰';
+        effect.style.color = '#fdcb6e';
     }
     
     document.body.appendChild(effect);
@@ -388,34 +417,34 @@ function checkAchievements() {
         showAchievement('ECO LEGEND STATUS!', '👑');
     }
     
-    if (israelSupport === 5) {
-        showAchievement('Democracy Supporter!', '🏛️');
+    if (zettaSupport === 5) {
+        showAchievement('Money Maker!', '💰');
     }
-    if (israelSupport === 15) {
-        showAchievement('Freedom Fighter!', '⭐');
+    if (zettaSupport === 15) {
+        showAchievement('Business Mogul!', '🏦');
     }
-    if (israelSupport === 25) {
-        showAchievement('Liberty Guardian!', '🛡️');
+    if (zettaSupport === 25) {
+        showAchievement('Financial Genius!', '�');
     }
-    if (israelSupport === 50) {
-        showAchievement('Democratic Force!', '💪');
+    if (zettaSupport === 50) {
+        showAchievement('Zetta the Great!', '�');
     }
-    if (israelSupport === 100) {
-        showAchievement('DEMOCRACY CHAMPION!', '👑');
+    if (zettaSupport === 100) {
+        showAchievement('MONEY MASTER SUPREME!', '�');
     }
     
     // Position-based achievements
     if (currentPosition >= 80 && !window.nearGoalAchievement) {
-        showAchievement('SO CLOSE TO GAZA!', '🚢');
+        showAchievement('GRETTA ALMOST AT GAZA!', '🚢');
         window.nearGoalAchievement = true;
     }
     if (currentPosition <= 15 && !window.farAwayAchievement) {
-        showAchievement('Far from the goal!', '⚠️');
+        showAchievement('Gretta stuck at start!', '⚠️');
         window.farAwayAchievement = true;
     }
     
     // Battle achievements
-    if (gretaSupport === israelSupport && gretaSupport > 10) {
+    if (gretaSupport === zettaSupport && gretaSupport > 10) {
         showAchievement('EPIC TIE BATTLE!', '⚖️');
     }
 }
@@ -481,15 +510,15 @@ function pulseCounter(counterElement) {
 
 // Update original functions with achievement checks
 const originalSupportGreta = supportGreta;
-const originalSupportIsrael = supportIsrael;
+const originalSupportZetta = supportZetta;
 
 supportGreta = function() {
     originalSupportGreta();
     checkAchievements();
 };
 
-supportIsrael = function() {
-    originalSupportIsrael();
+supportZetta = function() {
+    originalSupportZetta();
     checkAchievements();
 };
 
@@ -544,7 +573,7 @@ const additionalKeyframes = `
         }
     }
     
-    @keyframes patrioticConfetti {
+    @keyframes moneyConfetti {
         0% {
             transform: translate(0, 0) rotate(0deg) scale(1);
             opacity: 1;
@@ -593,10 +622,10 @@ document.head.appendChild(dynamicStyle);
 // Funny random events
 setInterval(() => {
     const randomEvents = [
-        () => showAchievement('Random Eco Fact: Trees are cool! 🌳', '💡'),
-        () => showAchievement('Fun Fact: Politics is complicated! 🤯', '💡'),
-        () => showAchievement('The battle continues! ⚔️', '�'),
-        () => showAchievement('Keep clicking for fun! 🎮', '✨')
+        () => showAchievement('Gretta: "How dare you!"', '🌱'),
+        () => showAchievement('Zetta: "Oy vey, money!"', '�'),
+        () => showAchievement('The battle continues!', '⚔️'),
+        () => showAchievement('Keep clicking!', '🎮')
     ];
     
     if (Math.random() < 0.1) { // 10% chance every interval

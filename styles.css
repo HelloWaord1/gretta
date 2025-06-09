@@ -834,52 +834,13 @@ body::before {
 }
 
 .market-cap-display::before {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    background: linear-gradient(45deg, #00b894, #74b9ff, #fd79a8, #fdcb6e);
-    border-radius: 55px;
-    z-index: -1;
-    animation: marketCapPulse 3s ease-in-out infinite;
-    opacity: 0.7;
-}
-
-@keyframes marketCapPulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-    50% {
-        transform: scale(1.05);
-        opacity: 0.9;
-    }
+    display: none;
 }
 
 /* Journey line enhancements */
 .journey-line::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    background: linear-gradient(90deg, #00b894 0%, #e17055 100%);
-    border-radius: 6px;
-    z-index: -1;
-    animation: journeyGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes journeyGlow {
-    0% {
-        opacity: 0.5;
-    }
-    100% {
-        opacity: 1;
-        box-shadow: 0 0 20px rgba(0, 184, 148, 0.5);
-    }
+    animation: none;
+    opacity: 0.8;
 }
 
 /* Counter icons animation */
@@ -928,25 +889,8 @@ body::before {
 }
 
 .character-image::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: -8px;
-    right: -8px;
-    bottom: -8px;
-    border: 4px dashed #2d3436;
-    border-radius: 50%;
-    animation: characterBorder 3s linear infinite;
-    opacity: 0.3;
-}
-
-@keyframes characterBorder {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    animation: none;
+    opacity: 0.2;
 }
 
 /* Enhanced buy button with pulse effect */
@@ -956,26 +900,8 @@ body::before {
 }
 
 .buy-token-btn::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    background: linear-gradient(45deg, #00b894, #00cec9);
-    border-radius: 40px;
-    z-index: -1;
-    animation: buttonPulse 2s ease-in-out infinite;
-    opacity: 0.5;
-}
-
-@keyframes buttonPulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
+    animation: none;
+    opacity: 0.3;
 }
 
 /* Mobile responsiveness for comic effects */
@@ -996,4 +922,189 @@ body::before {
         bottom: -4px;
         border-width: 2px;
     }
+}
+
+/* Jewish Character Section - Zetta */
+.jewish-character-section {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 5px solid #2d3436;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 8px 8px 0px #fdcb6e;
+    max-width: 200px;
+    z-index: 100;
+}
+
+.section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #2d3436;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.jewish-character {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.jewish-character:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.jewish-visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.jewish-hat {
+    font-size: 2rem;
+    margin-bottom: -10px;
+    z-index: 2;
+    position: relative;
+}
+
+.jewish-face {
+    position: relative;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jewish-beard {
+    font-size: 2.5rem;
+    margin-top: -15px;
+    z-index: 1;
+}
+
+.emotion-face {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+.jewish-body {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.suit, .money-bag {
+    font-size: 1.5rem;
+}
+
+#jewishSpeech {
+    margin-top: 10px;
+    font-size: 0.7rem;
+    padding: 5px 10px;
+    background: #ffeaa7;
+    border: 2px solid #2d3436;
+    border-radius: 15px;
+    position: relative;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+#jewishSpeech.active {
+    opacity: 1;
+    transform: translateY(-5px);
+}
+
+/* Jewish Character Emotions */
+.jewish-character.angry .emotion-face {
+    animation: angryShake 0.5s infinite;
+}
+
+.jewish-character.angry #jewishSpeech {
+    background: #ff6b6b;
+    color: white;
+}
+
+.jewish-character.happy .emotion-face {
+    animation: happyBounce 1s infinite;
+}
+
+.jewish-character.happy #jewishSpeech {
+    background: #00b894;
+    color: white;
+}
+
+/* Обновляю счетчик Zetta */
+.zetta-counter {
+    box-shadow: 8px 8px 0px #fdcb6e;
+}
+
+.zetta-counter .counter-value {
+    color: #fdcb6e;
+}
+
+/* Mobile responsiveness для Jewish character */
+@media (max-width: 768px) {
+    .jewish-character-section {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin: 20px auto;
+        max-width: 250px;
+    }
+    
+    .section-title {
+        font-size: 0.8rem;
+    }
+    
+    .jewish-hat {
+        font-size: 1.5rem;
+    }
+    
+    .jewish-beard {
+        font-size: 2rem;
+    }
+    
+    .emotion-face {
+        font-size: 1.2rem;
+    }
+}
+
+/* Дополнительные эмоции */
+.emotion-angry::before {
+    content: '😤💢';
+}
+
+.emotion-happy::before {
+    content: '😊💰';
+}
+
+.emotion-neutral::before {
+    content: '😐💼';
+}
+
+/* Убираю проблемную анимацию market cap */
+@keyframes marketCapPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+/* Убираю button pulse которое может мешать */
+.buy-token-btn::before {
+    animation: none;
+    opacity: 0.3;
 }
