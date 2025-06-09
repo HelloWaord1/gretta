@@ -14,7 +14,9 @@ let gameState = {
 
 // WebSocket connection
 let ws = null;
-const WS_URL = 'ws://localhost:3001';
+const WS_URL = window.location.hostname === 'localhost' 
+    ? 'ws://localhost:3001' 
+    : 'wss://greta-vs-zetta-api.netlify.app/.netlify/functions/websocket';
 
 // DOM Elements
 const elements = {
