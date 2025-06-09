@@ -18,7 +18,7 @@ const clickIndicator = document.getElementById('clickIndicator');
 // Fun Sound Effects (text-based)
 const soundEffects = {
     greta: ['💥 CLIMATE POWER!', '🌱 ECO RAGE!', '🔥 HOW DARE YOU!', '⚡ SAVE EARTH!'],
-    zetta: ['💰 MONEY MONEY!', '🏦 OY VEY!', '� BUSINESS!', '📈 PROFIT TIME!'],
+    zetta: ['💰 MONEY MONEY!', '🏦 OY VEY!', '🏦 BUSINESS!', '📈 PROFIT TIME!'],
     achievement: ['🎉 AWESOME!', '🏆 LEGENDARY!', '⚡ EPIC WIN!', '🌟 AMAZING!']
 };
 
@@ -190,7 +190,7 @@ function updateCharacterEmotions() {
         if (backupFace) backupFace.textContent = '😊';
     } else {
         gretaElement.className = 'greta-character angry';
-        makeCharacterSpeak(gretaElement, 'SO FAR FROM GAZA! �');
+        makeCharacterSpeak(gretaElement, 'SO FAR FROM GAZA! 🚢');
         
         // Update backup Greta face  
         const backupFace = gretaElement.querySelector('.backup-greta .greta-face');
@@ -327,7 +327,7 @@ function createEcoConfetti(x, y) {
 
 // Money-themed confetti for Zetta
 function createMoneyConfetti(x, y) {
-    const moneyEmojis = ['💰', '💎', '🏦', '�', '💵', '�'];
+    const moneyEmojis = ['💰', '💎', '🏦', '💵', '💵'];
     for (let i = 0; i < 15; i++) {
         const confetti = document.createElement('div');
         confetti.textContent = moneyEmojis[Math.floor(Math.random() * moneyEmojis.length)];
@@ -424,13 +424,13 @@ function checkAchievements() {
         showAchievement('Business Mogul!', '🏦');
     }
     if (zettaSupport === 25) {
-        showAchievement('Financial Genius!', '�');
+        showAchievement('Financial Genius!', '💵');
     }
     if (zettaSupport === 50) {
-        showAchievement('Zetta the Great!', '�');
+        showAchievement('Zetta the Great!', '🏦');
     }
     if (zettaSupport === 100) {
-        showAchievement('MONEY MASTER SUPREME!', '�');
+        showAchievement('MONEY MASTER SUPREME!', '💵');
     }
     
     // Position-based achievements
@@ -623,7 +623,7 @@ document.head.appendChild(dynamicStyle);
 setInterval(() => {
     const randomEvents = [
         () => showAchievement('Gretta: "How dare you!"', '🌱'),
-        () => showAchievement('Zetta: "Oy vey, money!"', '�'),
+        () => showAchievement('Zetta: "Oy vey, money!"', '💵'),
         () => showAchievement('The battle continues!', '⚔️'),
         () => showAchievement('Keep clicking!', '🎮')
     ];

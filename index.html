@@ -3,56 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gretta VS Zetta - Epic Battle!</title>
+    <title>Greta VS Zetta - Epic Battle!</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka+One&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" type="image/png">
 </head>
 <body>
-    <!-- Fun Background Elements -->
-    <div class="comic-effects">
-        <div class="pow-effect">POW!</div>
-        <div class="boom-effect">BOOM!</div>
-        <div class="zap-effect">ZAP!</div>
+    <!-- Professional Background -->
+    <div class="bg-wrapper">
+        <div class="ocean-bg"></div>
+        <div class="clouds-bg"></div>
+        <div class="comic-effects">
+            <div class="pow-effect">POW!</div>
+            <div class="boom-effect">BOOM!</div>
+            <div class="zap-effect">ZAP!</div>
+        </div>
     </div>
 
     <div class="container">
-        <!-- Header -->
+        <!-- Professional Header -->
         <header class="header">
-            <h1>🚢 Gretta VS Zetta �</h1>
+            <div class="logo-section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Greta_Thunberg_4.jpg/256px-Greta_Thunberg_4.jpg" 
+                     alt="Greta Logo" class="header-logo" onerror="this.style.display='none';">
+                <div class="title-group">
+                    <h1>🚢 Greta VS Zetta 💰</h1>
+                    <div class="subtitle-badge">
+                        <span class="badge-text">LIVE BATTLE SIMULATOR</span>
+                    </div>
+                </div>
+                <img src="https://cdn.pixabay.com/photo/2017/01/31/13/05/money-2023430_960_720.png" 
+                     alt="Money Logo" class="header-logo money-logo" onerror="this.style.display='none';">
+            </div>
             <p class="subtitle">The higher the Market Cap, the closer Greta gets to Gaza! 💥</p>
             <div class="fun-subtitle">
                 <span class="rainbow-text">Epic Battle: Climate Warrior vs. The Money Master!</span>
             </div>
+            
+            <!-- Live Stats Banner -->
+            <div class="live-stats-banner">
+                <div class="stat-item">
+                    <span class="stat-label">🔴 LIVE</span>
+                    <span class="stat-value">Battle Active</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">👥 Users</span>
+                    <span class="stat-value" id="userCount">1,337</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">⚡ Clicks</span>
+                    <span class="stat-value" id="totalClicks">0</span>
+                </div>
+            </div>
         </header>
 
-        <!-- Market Cap Indicator -->
+        <!-- Enhanced Market Cap Section -->
         <div class="market-cap-section">
-            <div class="market-cap-display">
-                <span class="label">💰 Market Cap:</span>
-                <span id="marketCap" class="value">$1,234,567</span>
-                <div class="cap-emoji">📈</div>
+            <div class="market-cap-container">
+                <div class="market-cap-display">
+                    <div class="cap-icon">📈</div>
+                    <div class="cap-info">
+                        <span class="label">💰 Market Cap:</span>
+                        <span id="marketCap" class="value">$1,234,567</span>
+                        <div class="cap-change" id="capChange">+$0</div>
+                    </div>
+                    <div class="cap-trend">
+                        <canvas id="trendChart" width="100" height="30"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Market Analysis Panel -->
+                <div class="market-analysis">
+                    <div class="analysis-item">
+                        <span class="analysis-label">24h Volume:</span>
+                        <span class="analysis-value" id="volume24h">$892,456</span>
+                    </div>
+                    <div class="analysis-item">
+                        <span class="analysis-label">ATH:</span>
+                        <span class="analysis-value">$9,876,543</span>
+                    </div>
+                    <div class="analysis-item">
+                        <span class="analysis-label">Volatility:</span>
+                        <span class="analysis-value volatile">HIGH �</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Journey Zone -->
+        <!-- Professional Journey Zone -->
         <div class="journey-zone">
+            <!-- Journey Background -->
+            <div class="journey-background">
+                <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800" 
+                     alt="Ocean Background" class="ocean-image" onerror="this.style.display='none';">
+            </div>
+            
             <div class="journey-line">
                 <div class="start-point">
-                    <span>🏠 Start</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" 
+                         alt="Home" class="point-icon" onerror="this.innerHTML='🏠';">
+                    <span>Start</span>
                 </div>
                 <div class="end-point">
-                    <span>🏴‍☠️ Gaza</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041728.png" 
+                         alt="Flag" class="point-icon" onerror="this.innerHTML='🏴‍☠️';">
+                    <span>Gaza</span>
                 </div>
                 
-                <!-- Boat with Greta -->
+                <!-- Professional Boat with Greta -->
                 <div id="boat" class="boat">
+                    <div class="boat-hull">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2990/2990058.png" 
+                             alt="Boat" class="boat-image" onerror="this.style.display='none';">
+                    </div>
                     <div id="greta" class="greta-character">
-                        <div class="character-image">
-                            <img src="https://i.kym-cdn.com/entries/icons/facebook/000/031/727/cover10.jpg" 
-                                 alt="Greta Cartoon" class="greta-img" onerror="this.style.display='none';">
-                            <div class="backup-greta">
-                                <div class="greta-face"></div>
-                                <div class="speech-bubble">HOW DARE YOU!</div>
+                        <div class="character-container">
+                            <img src="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" 
+                                 alt="Greta Thunberg" class="greta-main-img">
+                            <div class="character-effects">
+                                <div class="emotion-indicator" id="gretaEmotion">😊</div>
+                                <div class="speech-bubble" id="gretaSpeech">HOW DARE YOU!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Indicators -->
+                <div class="progress-markers">
+                    <div class="marker" data-position="25">25%</div>
+                    <div class="marker" data-position="50">50%</div>
+                    <div class="marker" data-position="75">75%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Zetta Character Section -->
+        <div class="zetta-character-section">
+            <div class="character-panel">
+                <div class="panel-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" 
+                         alt="Business" class="panel-icon" onerror="this.innerHTML='💰';">
+                    <h3>ZETTA THE MONEY MASTER</h3>
+                </div>
+                
+                <div id="jewishCharacter" class="jewish-character">
+                    <div class="character-image">
+                        <div class="character-avatar">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135823.png" 
+                                 alt="Businessman" class="zetta-avatar" onerror="this.style.display='none';">
+                            <div class="zetta-visual">
+                                <div class="zetta-hat">🎩</div>
+                                <div class="zetta-face">
+                                    <div class="zetta-beard">🧔</div>
+                                    <div class="emotion-face" id="jewishEmotion">😤</div>
+                                </div>
+                                <div class="zetta-accessories">
+                                    <div class="suit">💼</div>
+                                    <div class="money-bag">💰</div>
+                                    <div class="gold-chain">📿</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="speech-bubble" id="jewishSpeech">OY VEY!</div>
+                    </div>
+                    
+                    <!-- Zetta Stats -->
+                    <div class="character-stats">
+                        <div class="stat-bar">
+                            <span class="stat-name">Wealth Level:</span>
+                            <div class="stat-progress">
+                                <div class="stat-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-bar">
+                            <span class="stat-name">Business Power:</span>
+                            <div class="stat-progress">
+                                <div class="stat-fill" style="width: 92%"></div>
                             </div>
                         </div>
                     </div>
@@ -60,80 +186,130 @@
             </div>
         </div>
 
-        <!-- Right Side - Jewish Character (Zetta) -->
-        <div class="jewish-character-section">
-            <div class="section-title">💰 ZETTA THE MONEY MASTER 💰</div>
-            <div id="jewishCharacter" class="jewish-character">
-                <div class="character-image">
-                    <div class="jewish-visual">
-                        <div class="jewish-hat">🎩</div>
-                        <div class="jewish-face">
-                            <div class="jewish-beard">🧔</div>
-                            <div class="emotion-face" id="jewishEmotion">😤</div>
-                        </div>
-                        <div class="jewish-body">
-                            <div class="suit">💼</div>
-                            <div class="money-bag">💰</div>
-                        </div>
-                        <div class="speech-bubble" id="jewishSpeech">OY VEY!</div>
+        <!-- Professional Support Counters -->
+        <div class="support-counters">
+            <div class="counter greta-counter">
+                <div class="counter-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" 
+                         alt="Earth" class="counter-icon-img" onerror="this.innerHTML='🌱';">
+                    <h3>Team Greta Support</h3>
+                </div>
+                <div class="counter-body">
+                    <div id="gretaSupport" class="counter-value">0</div>
+                    <div class="counter-subtitle">Climate Warriors Unite!</div>
+                    <div class="counter-progress">
+                        <div class="progress-bar greta-progress"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="counter zetta-counter">
+                <div class="counter-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" 
+                         alt="Money" class="counter-icon-img" onerror="this.innerHTML='💰';">
+                    <h3>Team Zetta Support</h3>
+                </div>
+                <div class="counter-body">
+                    <div id="israelSupport" class="counter-value">0</div>
+                    <div class="counter-subtitle">Money Masters Rule!</div>
+                    <div class="counter-progress">
+                        <div class="progress-bar zetta-progress"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Support Counters -->
-        <div class="support-counters">
-            <div class="counter greta-counter">
-                <div class="counter-icon">🌱</div>
-                <div class="counter-label">Team Greta Support</div>
-                <div id="gretaSupport" class="counter-value">0</div>
-                <div class="counter-subtitle">Climate Warriors!</div>
-            </div>
-            <div class="counter zetta-counter">
-                <div class="counter-icon">💰</div>
-                <div class="counter-label">Team Zetta Support</div>
-                <div id="israelSupport" class="counter-value">0</div>
-                <div class="counter-subtitle">Money Masters!</div>
-            </div>
-        </div>
-
-        <!-- Battle Instructions -->
+        <!-- Enhanced Battle Instructions -->
         <div class="battle-instructions">
             <div class="instruction-card">
-                <h3>🎮 How to Battle!</h3>
-                <div class="instruction-item">
-                    <span class="instruction-icon">👈</span>
-                    <span>Click LEFT side = Support Greta! (+Market Cap)</span>
+                <div class="card-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" 
+                         alt="Game Controller" class="instruction-icon-img" onerror="this.innerHTML='🎮';">
+                    <h3>Battle Instructions</h3>
                 </div>
-                <div class="instruction-item">
-                    <span class="instruction-icon">👉</span>
-                    <span>Click RIGHT side = Support Zetta! (-Market Cap)</span>
+                <div class="instruction-grid">
+                    <div class="instruction-item greta-instruction">
+                        <div class="instruction-visual">
+                            <span class="instruction-icon">👈</span>
+                            <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" 
+                                 alt="Earth" class="mini-icon" onerror="this.style.display='none';">
+                        </div>
+                        <div class="instruction-text">
+                            <strong>Support Greta</strong>
+                            <span>Click LEFT side to increase Market Cap</span>
+                        </div>
+                    </div>
+                    <div class="instruction-item zetta-instruction">
+                        <div class="instruction-visual">
+                            <span class="instruction-icon">👉</span>
+                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" 
+                                 alt="Money" class="mini-icon" onerror="this.style.display='none';">
+                        </div>
+                        <div class="instruction-text">
+                            <strong>Support Zetta</strong>
+                            <span>Click RIGHT side to decrease Market Cap</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="fun-note">
-                    <strong>🎯 Pro Tip:</strong> Click directly on characters for MEGA EFFECTS! 
+                <div class="pro-tip">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2996/2996747.png" 
+                         alt="Tip" class="tip-icon" onerror="this.innerHTML='🎯';">
+                    <strong>Pro Tip:</strong> Click directly on characters for MEGA EFFECTS! 
                 </div>
             </div>
         </div>
 
-        <!-- Social Buttons -->
+        <!-- Professional Social Section -->
         <footer class="social-section">
-            <div class="social-buttons">
-                <a href="#" class="social-btn telegram">📱 Telegram</a>
-                <a href="#" class="social-btn twitter">🐦 Twitter</a>
-                <a href="#" class="social-btn discord">🎮 Discord</a>
-            </div>
-            <button class="buy-token-btn">🚀 Buy $GRETTA Token!</button>
-            <div class="disclaimer">
-                <small>⚠️ This is a parody site for entertainment purposes only! 😄</small>
+            <div class="social-container">
+                <div class="social-header">
+                    <h3>Join the Battle Community</h3>
+                    <p>Connect with thousands of other warriors!</p>
+                </div>
+                <div class="social-buttons">
+                    <a href="#" class="social-btn telegram">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" 
+                             alt="Telegram" class="social-icon" onerror="this.innerHTML='📱';">
+                        <span>Telegram</span>
+                    </a>
+                    <a href="#" class="social-btn twitter">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" 
+                             alt="Twitter" class="social-icon" onerror="this.innerHTML='🐦';">
+                        <span>Twitter</span>
+                    </a>
+                    <a href="#" class="social-btn discord">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" 
+                             alt="Discord" class="social-icon" onerror="this.innerHTML='🎮';">
+                        <span>Discord</span>
+                    </a>
+                </div>
+                <button class="buy-token-btn">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" 
+                         alt="Coin" class="btn-icon" onerror="this.innerHTML='🚀';">
+                    <span>Buy $GRETA Token!</span>
+                </button>
+                <div class="disclaimer">
+                    <small>⚠️ This is a parody site for entertainment purposes only! 😄</small>
+                </div>
             </div>
         </footer>
 
-        <!-- Click Indicator -->
+        <!-- Enhanced UI Elements -->
         <div id="clickIndicator" class="click-indicator"></div>
-
-        <!-- Fun Elements -->
         <div class="floating-emojis"></div>
         <div class="battle-effects"></div>
+        
+        <!-- Professional Loading Screen -->
+        <div id="loadingScreen" class="loading-screen">
+            <div class="loading-content">
+                <img src="https://i.postimg.cc/B6r0g75Y/2025-06-09-13-36-44.png" 
+                     alt="Loading" class="loading-image">
+                <h2>Loading Epic Battle...</h2>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
