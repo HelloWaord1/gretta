@@ -457,6 +457,8 @@ body {
   overflow: hidden;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-decoration: none;
+  font-family: inherit;
 }
 
 .action-btn::before {

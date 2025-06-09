@@ -1,13 +1,20 @@
 // Game State Management
 let gameState = {
-    marketCap: 1000000, // Initial Market Cap
+    marketCap: 0, // Initial Market Cap
     gretaSupport: 0,
     zettaSupport: 0,
-    gretaPosition: 20, // Position in percentage (20% = start)
-    isGretaHappy: true,
+    gretaPosition: 5, // Position in percentage (5% = start)
+    isGretaHappy: false,
     isZettaAngry: false,
-    animationSpeed: 500 // Animation duration in ms
+    animationSpeed: 500, // Animation duration in ms
+    isConnected: false,
+    tokenAddress: 'GXG4Zu7mEAKHdGVnhhy6h3bHrN5nqYpSJcyVGooiPump',
+    maxMarketCap: 10000000 // $10M = 100% (Israel)
 };
+
+// WebSocket connection
+let ws = null;
+const WS_URL = 'ws://localhost:3001';
 
 // DOM Elements
 const elements = {
@@ -27,13 +34,12 @@ const elements = {
 // Game Initialization
 function initGame() {
     validateElements();
-    updateDisplay();
+    connectWebSocket();
     setupEventListeners();
-    startMarketCapSimulation();
     addBackgroundEffects();
     
     console.log('⚡ Greta vs Zetta initialized!');
-    showNotification('🎮 Game Ready!', 'Click characters to support them!');
+    showNotification('🎮 Game Ready!', 'Connecting to live data...');
 }
 
 // Validate DOM Elements
@@ -86,20 +92,23 @@ function formatMarketCap(value) {
 
 // Update Greta's Position
 function updateGretaPosition() {
-    // Position based on Market Cap and support difference
-    const basePosition = Math.min(Math.max(gameState.marketCap / 10000000 * 60, 5), 80);
-    const supportBonus = (gameState.gretaSupport - gameState.zettaSupport) * 0.5;
+    // Position based ONLY on Market Cap (0 = Start, $10M = Israel)
+    const marketCapRatio = gameState.marketCap / gameState.maxMarketCap;
     
-    gameState.gretaPosition = Math.min(Math.max(basePosition + supportBonus, 5), 80);
+    // Map 0-$10M to 5%-80% position (leaving margins for start/end points)
+    gameState.gretaPosition = Math.min(Math.max(5 + (marketCapRatio * 75), 5), 80);
     
     // Animate Greta's movement
     if (elements.gretaCharacter) {
         elements.gretaCharacter.style.left = gameState.gretaPosition + '%';
     }
     
-    // Determine emotions
-    gameState.isGretaHappy = gameState.gretaPosition > 40;
-    gameState.isZettaAngry = gameState.gretaPosition > 50;
+    // Determine emotions based on position
+    // Happy when closer to Israel (>50% = $5M+)
+    gameState.isGretaHappy = gameState.gretaPosition > 42.5; // ~$5M
+    
+    // Zetta gets angry when Greta is >60% to Israel (~$7M+) 
+    gameState.isZettaAngry = gameState.gretaPosition > 65;
 }
 
 // Update Character Animations
@@ -156,12 +165,7 @@ function setupEventListeners() {
         }
     });
     
-    // Buy token button
-    if (elements.buyTokenBtn) {
-        elements.buyTokenBtn.addEventListener('click', () => {
-            buyToken();
-        });
-    }
+    // Buy token link - no need for event listener since it's now a direct link
     
     // Track area support for Greta
     const journeySection = document.querySelector('.journey-section');
@@ -189,7 +193,8 @@ function handleKeyboard(e) {
             supportZetta();
             break;
         case 'b':
-            buyToken();
+            // Open buy link in new tab
+            window.open('https://dexscreener.com/solana/7afebgrxemqdqmqpdhxqr7uis6iswsaugotcrgmfdehz', '_blank');
             break;
         case 'r':
             resetGame();
@@ -199,63 +204,59 @@ function handleKeyboard(e) {
 
 // Support Greta
 function supportGreta() {
-    gameState.gretaSupport++;
-    
     // Visual feedback
     showClickEffect('💚', 'Greta Support!', 'success');
     addPulseEffect(elements.gretaCard);
     
-    // Market impact
-    const impact = Math.random() * 15000 + 8000;
-    gameState.marketCap += impact;
+    // Send to server
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+            type: 'supportGreta'
+        }));
+    } else {
+        // Fallback for offline mode
+        gameState.gretaSupport++;
+        updateDisplay();
+        showNotification('⚠️ Offline Mode', 'Vote counted locally only');
+    }
     
-    updateDisplay();
-    
-    console.log('💚 Greta supported! Market Cap +', formatMarketCap(impact));
+    console.log('💚 Greta support sent!');
 }
 
 // Support Zetta
 function supportZetta() {
-    gameState.zettaSupport++;
-    
     // Visual feedback
     showClickEffect('💙', 'Zetta Support!', 'info');
     addPulseEffect(elements.zettaCard);
     
-    // Market impact
-    const impact = Math.random() * 12000 + 5000;
-    gameState.marketCap -= impact;
-    gameState.marketCap = Math.max(gameState.marketCap, 10000); // Minimum cap
+    // Send to server
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+            type: 'supportZetta'
+        }));
+    } else {
+        // Fallback for offline mode
+        gameState.zettaSupport++;
+        updateDisplay();
+        showNotification('⚠️ Offline Mode', 'Vote counted locally only');
+    }
     
-    updateDisplay();
-    
-    console.log('💙 Zetta supported! Market Cap -', formatMarketCap(impact));
-}
-
-// Buy Token
-function buyToken() {
-    const purchaseAmount = Math.random() * 150000 + 75000;
-    gameState.marketCap += purchaseAmount;
-    
-    // Visual effects
-    showClickEffect('💰', `Bought $${formatMarketCap(purchaseAmount)}!`, 'warning');
-    addShineEffect(elements.buyTokenBtn);
-    
-    updateDisplay();
-    
-    console.log('💰 Token purchased! Market Cap +', formatMarketCap(purchaseAmount));
+    console.log('💙 Zetta support sent!');
 }
 
 // Reset Game
 function resetGame() {
     gameState = {
-        marketCap: 1000000,
+        marketCap: 0,
         gretaSupport: 0,
         zettaSupport: 0,
-        gretaPosition: 20,
-        isGretaHappy: true,
+        gretaPosition: 5,
+        isGretaHappy: false,
         isZettaAngry: false,
-        animationSpeed: 500
+        animationSpeed: 500,
+        isConnected: gameState.isConnected, // Keep connection state
+        tokenAddress: 'GXG4Zu7mEAKHdGVnhhy6h3bHrN5nqYpSJcyVGooiPump',
+        maxMarketCap: 10000000
     };
     
     updateDisplay();
@@ -404,18 +405,130 @@ function animateValueChange(element) {
     }, 300);
 }
 
-// Market Cap Simulation
-function startMarketCapSimulation() {
-    setInterval(() => {
-        // Random market fluctuations
-        const volatility = 0.05; // 5% volatility
-        const change = (Math.random() - 0.5) * gameState.marketCap * volatility;
+// WebSocket Connection Management
+function connectWebSocket() {
+    try {
+        ws = new WebSocket(WS_URL);
         
-        gameState.marketCap += change;
-        gameState.marketCap = Math.max(gameState.marketCap, 10000);
+        ws.onopen = () => {
+            console.log('🔗 Connected to server');
+            gameState.isConnected = true;
+            updateConnectionStatus(true);
+            showNotification('🟢 Connected!', 'Live data and voting active');
+        };
         
+        ws.onmessage = (event) => {
+            try {
+                const message = JSON.parse(event.data);
+                handleServerMessage(message);
+            } catch (error) {
+                console.error('❌ Error parsing server message:', error);
+            }
+        };
+        
+        ws.onclose = () => {
+            console.log('📤 Disconnected from server');
+            gameState.isConnected = false;
+            updateConnectionStatus(false);
+            showNotification('🔴 Disconnected', 'Retrying connection...');
+            
+            // Reconnect after 3 seconds
+            setTimeout(connectWebSocket, 3000);
+        };
+        
+        ws.onerror = (error) => {
+            console.error('🔴 WebSocket error:', error);
+            gameState.isConnected = false;
+            updateConnectionStatus(false);
+        };
+        
+    } catch (error) {
+        console.error('❌ Failed to connect:', error);
+        showNotification('⚠️ Connection Failed', 'Running in offline mode');
+        // Fallback to initial display
         updateDisplay();
-    }, 4000); // Every 4 seconds
+    }
+}
+
+// Handle Server Messages
+function handleServerMessage(message) {
+    switch (message.type) {
+        case 'stateUpdate':
+            // Initial state from server
+            gameState.gretaSupport = message.data.gretaSupport;
+            gameState.zettaSupport = message.data.zettaSupport;
+            gameState.marketCap = message.data.marketCap;
+            updateDisplay();
+            break;
+            
+        case 'vote':
+            // Live vote update
+            if (message.data.type === 'greta') {
+                gameState.gretaSupport = message.data.count;
+            } else if (message.data.type === 'zetta') {
+                gameState.zettaSupport = message.data.count;
+            }
+            updateDisplay();
+            break;
+            
+        case 'marketCapUpdate':
+            // Live market cap update
+            gameState.marketCap = message.data.marketCap;
+            updateDisplay();
+            
+            // Show price change notification
+            if (message.data.changePercent && Math.abs(message.data.changePercent) > 1) {
+                const direction = message.data.change > 0 ? '📈' : '📉';
+                const sign = message.data.changePercent > 0 ? '+' : '';
+                showNotification(
+                    `${direction} Market Update`,
+                    `${sign}${message.data.changePercent}% • Source: ${message.data.source}`
+                );
+            }
+            break;
+            
+        case 'notification':
+            // Server notifications (trades, alerts, etc.)
+            showNotification(message.data.title, message.data.message, message.data.type);
+            break;
+            
+        default:
+            console.log('📨 Unknown message type:', message.type);
+    }
+}
+
+// Update Connection Status UI
+function updateConnectionStatus(isConnected) {
+    // Add connection indicator to header
+    let indicator = document.querySelector('.connection-indicator');
+    if (!indicator) {
+        indicator = document.createElement('div');
+        indicator.className = 'connection-indicator';
+        indicator.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        `;
+        document.body.appendChild(indicator);
+    }
+    
+    if (isConnected) {
+        indicator.textContent = '🟢 Live';
+        indicator.style.background = 'rgba(76, 175, 80, 0.2)';
+        indicator.style.border = '1px solid rgba(76, 175, 80, 0.4)';
+        indicator.style.color = '#4CAF50';
+    } else {
+        indicator.textContent = '🔴 Offline';
+        indicator.style.background = 'rgba(244, 67, 54, 0.2)';
+        indicator.style.border = '1px solid rgba(244, 67, 54, 0.4)';
+        indicator.style.color = '#F44336';
+    }
 }
 
 // Add Background Effects
@@ -441,33 +554,6 @@ function addBackgroundEffects() {
     }, 3000);
 }
 
-// API Integration (placeholder)
-async function fetchRealMarketCap() {
-    try {
-        // Replace with actual token API
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd&include_market_cap=true');
-        const data = await response.json();
-        
-        if (data.ethereum && data.ethereum.usd_market_cap) {
-            return data.ethereum.usd_market_cap / 1000; // Scale down for demo
-        }
-    } catch (error) {
-        console.error('🔴 API Error:', error);
-    }
-    
-    return gameState.marketCap;
-}
-
-// Update from Real API
-async function updateFromAPI() {
-    const realMarketCap = await fetchRealMarketCap();
-    if (realMarketCap && realMarketCap !== gameState.marketCap) {
-        gameState.marketCap = realMarketCap;
-        updateDisplay();
-        showNotification('📊 Live Data', 'Market Cap updated from API');
-    }
-}
-
 // Game Loop
 function gameLoop() {
     updateDisplay();
@@ -485,10 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addAnimationStyles();
     initGame();
     
-    // Optional: Enable real API updates
-    // setInterval(updateFromAPI, 60000); // Every minute
-    
-    console.log('⚡ Greta vs Zetta - Battle for the Market! 🚀');
+    console.log('⚡ Greta vs Zetta - Real-time Battle! 🚀');
 });
 
 // Error Handling
