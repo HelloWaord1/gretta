@@ -1,80 +1,192 @@
-// Global Variables
-let marketCap = 1234567;
-let gretaSupport = 0;
-let zettaSupport = 0; // Изменил с israelSupport
-let currentPosition = 10; // Greta's position in percentage (10% - starting position)
+// Ocean Blue Battle - Greta VS Zetta with Real Token Data
 
-// DOM Elements
-const marketCapElement = document.getElementById('marketCap');
-const gretaSupportElement = document.getElementById('gretaSupport');
-const zettaSupportElement = document.getElementById('israelSupport'); // Оставляю ID для совместимости
-const boatElement = document.getElementById('boat');
-const gretaElement = document.getElementById('greta');
-const jewishElement = document.getElementById('jewishCharacter'); // Новый еврейский персонаж
-const jewishEmotionElement = document.getElementById('jewishEmotion');
-const jewishSpeechElement = document.getElementById('jewishSpeech');
-const clickIndicator = document.getElementById('clickIndicator');
-
-// Fun Sound Effects (text-based)
-const soundEffects = {
-    greta: ['💥 CLIMATE POWER!', '🌱 ECO RAGE!', '🔥 HOW DARE YOU!', '⚡ SAVE EARTH!'],
-    zetta: ['💰 MONEY MONEY!', '🏦 OY VEY!', '🏦 BUSINESS!', '📈 PROFIT TIME!'],
-    achievement: ['🎉 AWESOME!', '🏆 LEGENDARY!', '⚡ EPIC WIN!', '🌟 AMAZING!']
+// Token configuration
+const TOKEN_ADDRESS = 'Ey59PH7Z4BFU4HjyKnyMdWt5GGN76KazTAwQihoUXRnk';
+const API_ENDPOINTS = {
+    // Try multiple APIs for better reliability
+    dexscreener: `https://api.dexscreener.com/latest/dex/tokens/${TOKEN_ADDRESS}`,
+    jupiter: `https://price.jup.ag/v4/price?ids=${TOKEN_ADDRESS}`,
+    birdeye: `https://public-api.birdeye.so/defi/token_overview?address=${TOKEN_ADDRESS}`
 };
 
-// Jewish character phrases
-const jewishPhrases = {
-    angry: ['OY VEY!', 'NOT GOOD!', 'BUSINESS BAD!', 'MONEY PROBLEMS!'],
-    happy: ['EXCELLENT!', 'GOOD BUSINESS!', 'PROFIT TIME!', 'MONEY GOOD!'],
-    neutral: ['WAITING...', 'BUSINESS...', 'MONEY...', 'OY...']
-};
-
-// Initialize
+// Hide loading screen quickly
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, hiding loading screen...');
+    console.log('🌊 Ocean Battle Loading...');
     
-    // Hide loading screen immediately
     const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen) {
         setTimeout(() => {
             loadingScreen.style.display = 'none';
-            console.log('Loading screen hidden, starting game...');
-            // Start the game
-            new GretaVsZettaBattle();
-        }, 1000); // Just 1 second delay
+            console.log('🌊 Ocean Battle Started!');
+            new OceanBattle();
+        }, 1000);
     } else {
-        // No loading screen found, start game directly
-        console.log('No loading screen found, starting game directly...');
-        new GretaVsZettaBattle();
+        new OceanBattle();
     }
 });
 
-class GretaVsZettaBattle {
+class OceanBattle {
     constructor() {
-        this.marketCap = 1234567;
+        // Battle state
         this.gretaSupport = 0;
-        this.israelSupport = 0;
+        this.zettaSupport = 0;
         this.totalClicks = 0;
         this.userCount = 1337;
-        this.gretaPosition = 25; // percentage across journey
-        this.maxPosition = 80; // don't let boat go beyond 80%
-        this.minPosition = 10; // don't let boat go below 10%
-        this.lastMarketCap = this.marketCap;
+        this.gretaPosition = 25;
+        this.maxPosition = 80;
+        this.minPosition = 10;
+        
+        // Token data
+        this.tokenData = {
+            marketCap: 0,
+            price: 0,
+            volume24h: 0,
+            priceChange: 0,
+            lastUpdate: Date.now()
+        };
         this.trendData = [];
-        this.isLoaded = true; // Always loaded since we skip loading screen
+        this.isLoaded = true;
         this.achievements = [];
         
-        console.log('Greta VS Zetta Battle initialized!');
+        console.log('🌊 Ocean Battle Initialized!');
         this.initializeGame();
         this.bindEvents();
-        this.startMarketCapSimulation();
+        this.startTokenDataFetching();
         this.startUserCountSimulation();
         this.showWelcomeMessage();
     }
 
+    async fetchTokenData() {
+        console.log('📊 Fetching real token data...');
+        
+        try {
+            // Try DexScreener first (most reliable for Solana tokens)
+            const response = await fetch(API_ENDPOINTS.dexscreener);
+            const data = await response.json();
+            
+            if (data.pairs && data.pairs.length > 0) {
+                const pair = data.pairs[0]; // Get the first trading pair
+                this.tokenData = {
+                    marketCap: parseFloat(pair.marketCap) || 0,
+                    price: parseFloat(pair.priceUsd) || 0,
+                    volume24h: parseFloat(pair.volume?.h24) || 0,
+                    priceChange: parseFloat(pair.priceChange?.h24) || 0,
+                    lastUpdate: Date.now()
+                };
+                
+                console.log('✅ Token data fetched:', this.tokenData);
+                this.updateTokenDisplay();
+                return true;
+            }
+        } catch (error) {
+            console.warn('⚠️ DexScreener failed, trying Jupiter API...');
+        }
+        
+        try {
+            // Fallback to Jupiter API
+            const response = await fetch(API_ENDPOINTS.jupiter);
+            const data = await response.json();
+            
+            if (data.data && data.data[TOKEN_ADDRESS]) {
+                const tokenInfo = data.data[TOKEN_ADDRESS];
+                this.tokenData = {
+                    marketCap: tokenInfo.marketCap || 0,
+                    price: parseFloat(tokenInfo.price) || 0,
+                    volume24h: 0, // Jupiter doesn't provide volume
+                    priceChange: 0, // Jupiter doesn't provide price change
+                    lastUpdate: Date.now()
+                };
+                
+                console.log('✅ Jupiter data fetched:', this.tokenData);
+                this.updateTokenDisplay();
+                return true;
+            }
+        } catch (error) {
+            console.warn('⚠️ Jupiter API failed, using simulation...');
+        }
+        
+        // Fallback to simulation if APIs fail
+        this.simulateTokenData();
+        return false;
+    }
+
+    simulateTokenData() {
+        // Generate realistic crypto data for demo
+        const baseMarketCap = 1500000; // $1.5M
+        const volatility = 0.05; // 5% volatility
+        
+        const change = (Math.random() - 0.5) * volatility;
+        this.tokenData.marketCap = Math.max(100000, baseMarketCap * (1 + change));
+        this.tokenData.price = this.tokenData.marketCap / 1000000000; // Assume 1B supply
+        this.tokenData.volume24h = Math.random() * 500000 + 200000;
+        this.tokenData.priceChange = change * 100;
+        this.tokenData.lastUpdate = Date.now();
+        
+        console.log('🎲 Using simulated data:', this.tokenData);
+        this.updateTokenDisplay();
+    }
+
+    updateTokenDisplay() {
+        // Update Market Cap
+        const marketCapElement = document.getElementById('marketCap');
+        if (marketCapElement) {
+            marketCapElement.textContent = `$${this.formatNumber(this.tokenData.marketCap)}`;
+        }
+        
+        // Update Price Change
+        const capChangeElement = document.getElementById('capChange');
+        if (capChangeElement) {
+            const change = this.tokenData.priceChange;
+            capChangeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
+            capChangeElement.style.color = change >= 0 ? '#4CAF50' : '#F44336';
+        }
+        
+        // Update Price
+        const priceElement = document.getElementById('tokenPrice');
+        if (priceElement) {
+            priceElement.textContent = `$${this.tokenData.price.toFixed(6)}`;
+        }
+        
+        // Update Volume
+        const volumeElement = document.getElementById('volume24h');
+        if (volumeElement) {
+            volumeElement.textContent = `$${this.formatNumber(this.tokenData.volume24h)}`;
+        }
+        
+        // Update volatility status
+        const volatilityElement = document.getElementById('volatility');
+        if (volatilityElement) {
+            const absChange = Math.abs(this.tokenData.priceChange);
+            if (absChange > 10) {
+                volatilityElement.textContent = 'EXTREME 🌊';
+                volatilityElement.style.color = '#F44336';
+            } else if (absChange > 5) {
+                volatilityElement.textContent = 'HIGH 🌊';
+                volatilityElement.style.color = '#FF9800';
+            } else {
+                volatilityElement.textContent = 'NORMAL 🌊';
+                volatilityElement.style.color = '#4CAF50';
+            }
+        }
+        
+        // Update boat position based on market cap
+        this.updateBoatPosition();
+        this.updateCharacterEmotions();
+        this.addTrendData();
+    }
+
+    startTokenDataFetching() {
+        // Fetch immediately
+        this.fetchTokenData();
+        
+        // Then fetch every 30 seconds
+        setInterval(() => {
+            this.fetchTokenData();
+        }, 30000);
+    }
+
     initializeGame() {
-        console.log('Initializing game...');
-        this.updateMarketCapDisplay();
+        console.log('🎮 Initializing ocean battle...');
         this.updateCounters();
         this.updateBoatPosition();
         this.updateCharacterEmotions();
@@ -82,21 +194,17 @@ class GretaVsZettaBattle {
     }
 
     bindEvents() {
-        console.log('Binding events...');
+        console.log('🎯 Binding battle events...');
         
-        // Click zones for battle
+        // Battle click zones
         document.addEventListener('click', (e) => {
-            if (!this.isLoaded) {
-                console.log('Game not loaded yet, ignoring click');
-                return;
-            }
-            
+            if (!this.isLoaded) return;
             this.handleScreenClick(e);
         });
 
-        // Character direct clicks for mega effects
+        // Character mega clicks
         const gretaCharacter = document.getElementById('greta');
-        const jewishCharacter = document.getElementById('jewishCharacter');
+        const zettaCharacter = document.getElementById('jewishCharacter');
 
         if (gretaCharacter) {
             gretaCharacter.addEventListener('click', (e) => {
@@ -105,14 +213,14 @@ class GretaVsZettaBattle {
             });
         }
 
-        if (jewishCharacter) {
-            jewishCharacter.addEventListener('click', (e) => {
+        if (zettaCharacter) {
+            zettaCharacter.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.handleZettaClick(e);
             });
         }
 
-        // Buy token button
+        // UI buttons
         const buyTokenBtn = document.querySelector('.buy-token-btn');
         if (buyTokenBtn) {
             buyTokenBtn.addEventListener('click', () => {
@@ -120,7 +228,6 @@ class GretaVsZettaBattle {
             });
         }
 
-        // Social media buttons
         document.querySelectorAll('.social-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -130,11 +237,10 @@ class GretaVsZettaBattle {
     }
 
     showWelcomeMessage() {
-        console.log('Showing welcome message...');
         setTimeout(() => {
-            this.createFloatingText('🎮 Battle Started!', window.innerWidth / 2, window.innerHeight / 2);
-            this.showSpeechBubble('gretaSpeech', 'HOW DARE YOU!', 3000);
-            this.showSpeechBubble('jewishSpeech', 'OY VEY!', 3000);
+            this.createFloatingText('� Ocean Battle Started!', window.innerWidth / 2, window.innerHeight / 2);
+            this.showSpeechBubble('gretaSpeech', 'SAVE THE OCEANS!', 3000);
+            this.showSpeechBubble('jewishSpeech', 'BUSINESS TIME!', 3000);
         }, 500);
     }
 
@@ -147,10 +253,8 @@ class GretaVsZettaBattle {
         this.updateTotalClicks();
 
         if (isLeftSide) {
-            // Support Greta (increase market cap)
             this.supportGreta(e);
         } else {
-            // Support Zetta (decrease market cap)
             this.supportZetta(e);
         }
 
@@ -160,128 +264,87 @@ class GretaVsZettaBattle {
     }
 
     supportGreta(e) {
-        const increase = Math.floor(Math.random() * 50000) + 25000;
-        this.marketCap += increase;
         this.gretaSupport++;
         
-        this.showClickIndicator(e.clientX, e.clientY, `+$${this.formatNumber(increase)}`, '#27AE60');
-        this.createFloatingEmojis(e.clientX, e.clientY, ['🌱', '🌍', '💚', '✊']);
-        this.updateMarketCapDisplay();
+        this.showClickIndicator(e.clientX, e.clientY, 'Team Greta! 🌱', '#4CAF50');
+        this.createFloatingEmojis(e.clientX, e.clientY, ['🌱', '�', '💚', '✊']);
         this.updateCounters();
-        this.addTrendData();
         
-        // Random Greta phrases
-        const phrases = ['HOW DARE YOU!', 'SAVE THE PLANET!', 'CLIMATE ACTION NOW!', 'MY FUTURE!'];
+        const phrases = ['SAVE THE OCEANS!', 'CLIMATE ACTION!', 'HOW DARE YOU!', 'OUR FUTURE!'];
         this.showSpeechBubble('gretaSpeech', phrases[Math.floor(Math.random() * phrases.length)], 2000);
         
-        this.createBattleEffect('POW!', e.clientX, e.clientY, '#27AE60');
+        this.createBattleEffect('OCEAN POWER!', e.clientX, e.clientY, '#4CAF50');
     }
 
     supportZetta(e) {
-        const decrease = Math.floor(Math.random() * 40000) + 20000;
-        this.marketCap = Math.max(0, this.marketCap - decrease);
-        this.israelSupport++;
+        this.zettaSupport++;
         
-        this.showClickIndicator(e.clientX, e.clientY, `-$${this.formatNumber(decrease)}`, '#DAA520');
+        this.showClickIndicator(e.clientX, e.clientY, 'Team Zetta! 💼', '#FF9800');
         this.createFloatingEmojis(e.clientX, e.clientY, ['💰', '💼', '📈', '🏦']);
-        this.updateMarketCapDisplay();
         this.updateCounters();
-        this.addTrendData();
         
-        // Random Zetta phrases
-        const phrases = ['OY VEY!', 'BUSINESS GOOD!', 'MONEY TALKS!', 'PROFIT FIRST!'];
+        const phrases = ['BUSINESS TIME!', 'PROFIT FIRST!', 'MONEY TALKS!', 'INVEST NOW!'];
         this.showSpeechBubble('jewishSpeech', phrases[Math.floor(Math.random() * phrases.length)], 2000);
         
-        this.createBattleEffect('BOOM!', e.clientX, e.clientY, '#DAA520');
+        this.createBattleEffect('BUSINESS POWER!', e.clientX, e.clientY, '#FF9800');
     }
 
     handleGretaClick(e) {
         e.stopPropagation();
-        const megaIncrease = Math.floor(Math.random() * 200000) + 100000;
-        this.marketCap += megaIncrease;
         this.gretaSupport += 5;
         this.totalClicks++;
         
-        this.showClickIndicator(e.clientX, e.clientY, `MEGA +$${this.formatNumber(megaIncrease)}`, '#27AE60');
-        this.createFloatingEmojis(e.clientX, e.clientY, ['🚢', '🌊', '🌍', '💪', '✊']);
-        this.createConfetti('#27AE60');
+        this.showClickIndicator(e.clientX, e.clientY, 'MEGA OCEAN POWER! 🌊', '#4CAF50');
+        this.createFloatingEmojis(e.clientX, e.clientY, ['🚢', '🌊', '🌍', '💪', '⚡']);
+        this.createConfetti('#4CAF50');
         
-        this.updateMarketCapDisplay();
         this.updateCounters();
         this.updateTotalClicks();
         this.updateBoatPosition();
         this.updateCharacterEmotions();
         
-        this.showSpeechBubble('gretaSpeech', 'MEGA POWER!', 3000);
-        this.createBattleEffect('MEGA POW!', e.clientX, e.clientY, '#27AE60');
-        this.addTrendData();
+        this.showSpeechBubble('gretaSpeech', 'MEGA CLIMATE POWER!', 3000);
+        this.createBattleEffect('OCEAN MEGA!', e.clientX, e.clientY, '#4CAF50');
     }
 
     handleZettaClick(e) {
         e.stopPropagation();
-        const megaDecrease = Math.floor(Math.random() * 180000) + 90000;
-        this.marketCap = Math.max(0, this.marketCap - megaDecrease);
-        this.israelSupport += 5;
+        this.zettaSupport += 5;
         this.totalClicks++;
         
-        this.showClickIndicator(e.clientX, e.clientY, `MEGA -$${this.formatNumber(megaDecrease)}`, '#DAA520');
-        this.createFloatingEmojis(e.clientX, e.clientY, ['💰', '💎', '🏦', '📊', '💼']);
-        this.createConfetti('#DAA520');
+        this.showClickIndicator(e.clientX, e.clientY, 'MEGA BUSINESS! 💼', '#FF9800');
+        this.createFloatingEmojis(e.clientX, e.clientY, ['💰', '💎', '🏦', '📊', '�']);
+        this.createConfetti('#FF9800');
         
-        this.updateMarketCapDisplay();
         this.updateCounters();
         this.updateTotalClicks();
         this.updateBoatPosition();
         this.updateCharacterEmotions();
         
-        this.showSpeechBubble('jewishSpeech', 'MEGA BUSINESS!', 3000);
-        this.createBattleEffect('MEGA BOOM!', e.clientX, e.clientY, '#DAA520');
-        this.addTrendData();
-    }
-
-    updateMarketCapDisplay() {
-        const marketCapElement = document.getElementById('marketCap');
-        const capChangeElement = document.getElementById('capChange');
-        
-        if (marketCapElement) {
-            marketCapElement.textContent = `$${this.formatNumber(this.marketCap)}`;
-        }
-        
-        if (capChangeElement) {
-            const change = this.marketCap - this.lastMarketCap;
-            capChangeElement.textContent = change >= 0 ? `+$${this.formatNumber(change)}` : `-$${this.formatNumber(Math.abs(change))}`;
-            capChangeElement.style.color = change >= 0 ? '#27AE60' : '#E74C3C';
-        }
-        
-        // Update 24h volume
-        const volumeElement = document.getElementById('volume24h');
-        if (volumeElement) {
-            const volume = Math.floor(Math.random() * 1000000) + 500000;
-            volumeElement.textContent = `$${this.formatNumber(volume)}`;
-        }
+        this.showSpeechBubble('jewishSpeech', 'MEGA BUSINESS POWER!', 3000);
+        this.createBattleEffect('BUSINESS MEGA!', e.clientX, e.clientY, '#FF9800');
     }
 
     updateCounters() {
         const gretaSupportElement = document.getElementById('gretaSupport');
-        const israelSupportElement = document.getElementById('israelSupport');
+        const zettaSupportElement = document.getElementById('israelSupport');
         
         if (gretaSupportElement) {
             gretaSupportElement.textContent = this.formatNumber(this.gretaSupport);
         }
         
-        if (israelSupportElement) {
-            israelSupportElement.textContent = this.formatNumber(this.israelSupport);
+        if (zettaSupportElement) {
+            zettaSupportElement.textContent = this.formatNumber(this.zettaSupport);
         }
         
-        // Update progress bars
         this.updateProgressBars();
     }
 
     updateProgressBars() {
-        const total = this.gretaSupport + this.israelSupport;
+        const total = this.gretaSupport + this.zettaSupport;
         if (total > 0) {
             const gretaPercent = (this.gretaSupport / total) * 100;
-            const zettaPercent = (this.israelSupport / total) * 100;
+            const zettaPercent = (this.zettaSupport / total) * 100;
             
             const gretaProgress = document.querySelector('.greta-progress');
             const zettaProgress = document.querySelector('.zetta-progress');
@@ -302,57 +365,46 @@ class GretaVsZettaBattle {
         const boat = document.getElementById('boat');
         if (!boat) return;
 
-        // Calculate position based on market cap (higher cap = closer to Gaza)
+        // Position based on market cap and support ratio
         const basePosition = 25;
-        const capInfluence = Math.min(this.marketCap / 100000, 50); // Scale influence
-        this.gretaPosition = Math.max(this.minPosition, Math.min(this.maxPosition, basePosition + capInfluence));
+        const marketCapInfluence = Math.min(this.tokenData.marketCap / 1000000, 30); // Scale by millions
+        const supportInfluence = (this.gretaSupport - this.zettaSupport) * 0.5;
+        
+        this.gretaPosition = Math.max(
+            this.minPosition, 
+            Math.min(this.maxPosition, basePosition + marketCapInfluence + supportInfluence)
+        );
         
         boat.style.left = `${this.gretaPosition}%`;
         
-        // Add some boat animation
+        // Ocean wave animation
         boat.style.transition = 'left 2s ease-in-out, transform 0.5s ease';
-        const wave = Math.sin(Date.now() / 1000) * 2;
+        const wave = Math.sin(Date.now() / 1000) * 3;
         boat.style.transform = `translateY(-50%) rotate(${wave}deg)`;
     }
 
     updateCharacterEmotions() {
         const gretaEmotion = document.getElementById('gretaEmotion');
-        const jewishEmotion = document.getElementById('jewishEmotion');
+        const zettaEmotion = document.getElementById('jewishEmotion');
         
         // Greta: Happy when >50% to Gaza, angry when <50%
         const gretaIsHappy = this.gretaPosition > 50;
         
         if (gretaEmotion) {
-            gretaEmotion.textContent = gretaIsHappy ? '😊' : '😡';
+            gretaEmotion.textContent = gretaIsHappy ? '😊' : '�';
         }
         
-        // Zetta: Angry when Greta close to Gaza, happy when far
-        if (jewishEmotion) {
-            jewishEmotion.textContent = gretaIsHappy ? '😤💢' : '😊💰';
+        // Zetta: Opposite emotions
+        if (zettaEmotion) {
+            zettaEmotion.textContent = gretaIsHappy ? '�' : '�';
         }
-    }
-
-    startMarketCapSimulation() {
-        setInterval(() => {
-            if (!this.isLoaded) return;
-            
-            // Random market fluctuations
-            const change = (Math.random() - 0.5) * 20000;
-            this.lastMarketCap = this.marketCap;
-            this.marketCap = Math.max(0, this.marketCap + change);
-            
-            this.updateMarketCapDisplay();
-            this.updateBoatPosition();
-            this.updateCharacterEmotions();
-            this.addTrendData();
-        }, 3000);
     }
 
     startUserCountSimulation() {
         setInterval(() => {
             if (!this.isLoaded) return;
             
-            this.userCount += Math.floor(Math.random() * 5) - 2;
+            this.userCount += Math.floor(Math.random() * 7) - 3;
             this.userCount = Math.max(1000, this.userCount);
             
             const userCountElement = document.getElementById('userCount');
@@ -367,13 +419,13 @@ class GretaVsZettaBattle {
         if (!canvas) return;
         
         this.ctx = canvas.getContext('2d');
-        this.trendData = Array(20).fill(this.marketCap);
+        this.trendData = Array(20).fill(this.tokenData.marketCap || 1000000);
     }
 
     addTrendData() {
         if (!this.ctx) return;
         
-        this.trendData.push(this.marketCap);
+        this.trendData.push(this.tokenData.marketCap);
         if (this.trendData.length > 20) {
             this.trendData.shift();
         }
@@ -394,7 +446,7 @@ class GretaVsZettaBattle {
         const min = Math.min(...this.trendData);
         const range = max - min || 1;
         
-        this.ctx.strokeStyle = '#27AE60';
+        this.ctx.strokeStyle = '#2196F3';
         this.ctx.lineWidth = 2;
         this.ctx.beginPath();
         
@@ -425,7 +477,7 @@ class GretaVsZettaBattle {
 
         setTimeout(() => {
             indicator.style.opacity = '0';
-            indicator.style.transform = 'scale(1.5) translateY(-50px)';
+            indicator.style.transform = 'scale(1.2) translateY(-40px)';
         }, 100);
     }
 
@@ -437,7 +489,7 @@ class GretaVsZettaBattle {
             const element = document.createElement('div');
             element.textContent = emoji;
             element.className = 'floating-emoji';
-            element.style.left = (x + (index - emojis.length/2) * 30) + 'px';
+            element.style.left = (x + (index - emojis.length/2) * 25) + 'px';
             element.style.top = y + 'px';
             
             container.appendChild(element);
@@ -457,10 +509,10 @@ class GretaVsZettaBattle {
         element.style.position = 'absolute';
         element.style.left = x + 'px';
         element.style.top = y + 'px';
-        element.style.fontSize = '2rem';
-        element.style.fontWeight = 'bold';
-        element.style.color = '#FF4500';
-        element.style.textShadow = '2px 2px 4px rgba(0,0,0,0.5)';
+        element.style.fontSize = '1.8rem';
+        element.style.fontWeight = '600';
+        element.style.color = '#2196F3';
+        element.style.textShadow = '0 2px 4px rgba(0,0,0,0.3)';
         element.style.animation = 'floatUp 3s ease-out forwards';
         element.style.pointerEvents = 'none';
         element.style.zIndex = '1000';
@@ -481,15 +533,15 @@ class GretaVsZettaBattle {
         element.style.position = 'absolute';
         element.style.left = x + 'px';
         element.style.top = y + 'px';
-        element.style.fontSize = '3rem';
-        element.style.fontWeight = 'bold';
+        element.style.fontSize = '2rem';
+        element.style.fontWeight = '600';
         element.style.color = color;
-        element.style.fontFamily = "'Fredoka One', cursive";
-        element.style.textShadow = '4px 4px 8px rgba(0,0,0,0.5)';
+        element.style.fontFamily = "'Poppins', sans-serif";
+        element.style.textShadow = '0 2px 8px rgba(0,0,0,0.5)';
         element.style.animation = 'floatUp 2s ease-out forwards';
         element.style.pointerEvents = 'none';
         element.style.zIndex = '1000';
-        element.style.transform = 'rotate(' + (Math.random() * 20 - 10) + 'deg)';
+        element.style.transform = 'rotate(' + (Math.random() * 10 - 5) + 'deg)';
         
         container.appendChild(element);
         
@@ -502,9 +554,9 @@ class GretaVsZettaBattle {
         const container = document.querySelector('.floating-emojis');
         if (!container) return;
 
-        const confettiEmojis = ['💰', '💎', '🏆', '⭐', '🎉'];
+        const confettiEmojis = ['🎉', '⭐', '💫', '✨', '�'];
         
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 12; i++) {
             const element = document.createElement('div');
             element.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
             element.className = 'floating-emoji';
@@ -534,14 +586,13 @@ class GretaVsZettaBattle {
 
     checkAchievements() {
         const achievements = [
-            { id: 'first_click', condition: () => this.totalClicks === 1, message: '🎯 First Click!' },
-            { id: 'ten_clicks', condition: () => this.totalClicks === 10, message: '🔥 Getting Hot!' },
-            { id: 'hundred_clicks', condition: () => this.totalClicks === 100, message: '💯 Century!' },
-            { id: 'million_market', condition: () => this.marketCap >= 10000000, message: '💎 Market Millionaire!' },
-            { id: 'greta_win', condition: () => this.gretaPosition >= 75, message: '🌍 Climate Victory!' },
-            { id: 'zetta_win', condition: () => this.gretaPosition <= 15, message: '💰 Money Master!' },
-            { id: 'support_greta', condition: () => this.gretaSupport >= 50, message: '🌱 Greta Supporter!' },
-            { id: 'support_zetta', condition: () => this.israelSupport >= 50, message: '💼 Zetta Supporter!' }
+            { id: 'first_click', condition: () => this.totalClicks === 1, message: '� First Wave!' },
+            { id: 'ten_clicks', condition: () => this.totalClicks === 10, message: '🔥 Ocean Heat!' },
+            { id: 'hundred_clicks', condition: () => this.totalClicks === 100, message: '💯 Century Surfer!' },
+            { id: 'greta_supporter', condition: () => this.gretaSupport >= 50, message: '� Climate Champion!' },
+            { id: 'zetta_supporter', condition: () => this.zettaSupport >= 50, message: '� Business Mogul!' },
+            { id: 'ocean_victory', condition: () => this.gretaPosition >= 75, message: '� Ocean Victory!' },
+            { id: 'business_victory', condition: () => this.gretaPosition <= 15, message: '� Business Triumph!' }
         ];
 
         achievements.forEach(achievement => {
@@ -554,43 +605,38 @@ class GretaVsZettaBattle {
 
     showAchievement(message) {
         this.createFloatingText(message, window.innerWidth / 2, 100);
-        this.createConfetti('#FFD700');
+        this.createConfetti('#2196F3');
     }
 
     handleBuyToken() {
         this.createFloatingText('🚀 BUYING $GRETA TOKEN!', window.innerWidth / 2, window.innerHeight / 2);
-        this.createConfetti('#FF4500');
+        this.createConfetti('#2196F3');
         
-        // Simulate token purchase effect
-        const megaBoost = 500000;
-        this.marketCap += megaBoost;
+        // Boost for Greta
         this.gretaSupport += 10;
         this.totalClicks++;
         
-        this.updateMarketCapDisplay();
         this.updateCounters();
         this.updateTotalClicks();
         this.updateBoatPosition();
         this.updateCharacterEmotions();
         
-        this.showSpeechBubble('gretaSpeech', 'THANK YOU!', 4000);
-        this.addTrendData();
+        this.showSpeechBubble('gretaSpeech', 'THANK YOU FOR SUPPORTING CLIMATE!', 4000);
     }
 
     handleSocialClick(btn) {
         const platform = btn.querySelector('span').textContent;
-        this.createFloatingText(`📱 Opening ${platform}!`, btn.offsetLeft, btn.offsetTop);
+        this.createFloatingText(`🌊 Opening ${platform}!`, btn.offsetLeft, btn.offsetTop);
         
-        // Add some social media boost
-        this.marketCap += 25000;
-        this.gretaSupport += 2;
-        this.updateMarketCapDisplay();
+        // Small boost for interaction
+        this.gretaSupport += 1;
         this.updateCounters();
-        this.addTrendData();
     }
 
     formatNumber(num) {
-        if (num >= 1000000) {
+        if (num >= 1000000000) {
+            return (num / 1000000000).toFixed(1) + 'B';
+        } else if (num >= 1000000) {
             return (num / 1000000).toFixed(1) + 'M';
         } else if (num >= 1000) {
             return (num / 1000).toFixed(1) + 'K';
@@ -599,52 +645,32 @@ class GretaVsZettaBattle {
     }
 }
 
-// Add emergency click to skip loading (just in case)
-document.addEventListener('click', function emergencySkip() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    if (loadingScreen && window.getComputedStyle(loadingScreen).display !== 'none') {
-        console.log('Emergency skip: hiding loading screen...');
-        loadingScreen.style.display = 'none';
-        document.removeEventListener('click', emergencySkip);
-    }
-});
-
-// Add some extra visual effects
+// Ocean effects
 document.addEventListener('mousemove', (e) => {
-    if (Math.random() < 0.01) { // 1% chance
-        const sparkle = document.createElement('div');
-        sparkle.textContent = '✨';
-        sparkle.style.position = 'fixed';
-        sparkle.style.left = e.clientX + 'px';
-        sparkle.style.top = e.clientY + 'px';
-        sparkle.style.pointerEvents = 'none';
-        sparkle.style.fontSize = '1rem';
-        sparkle.style.animation = 'floatUp 2s ease-out forwards';
-        sparkle.style.zIndex = '1000';
+    if (Math.random() < 0.008) { // Reduced frequency for cleaner look
+        const ripple = document.createElement('div');
+        ripple.textContent = '🌊';
+        ripple.style.position = 'fixed';
+        ripple.style.left = e.clientX + 'px';
+        ripple.style.top = e.clientY + 'px';
+        ripple.style.pointerEvents = 'none';
+        ripple.style.fontSize = '1.2rem';
+        ripple.style.animation = 'floatUp 2s ease-out forwards';
+        ripple.style.zIndex = '50';
+        ripple.style.opacity = '0.6';
         
-        document.body.appendChild(sparkle);
+        document.body.appendChild(ripple);
         
         setTimeout(() => {
-            sparkle.remove();
+            ripple.remove();
         }, 2000);
     }
 });
 
-// Add pulse animation to important elements
+// Clean interval effects
 setInterval(() => {
-    const marketCapValue = document.querySelector('#marketCap');
-    if (marketCapValue && Math.random() < 0.3) {
-        marketCapValue.style.animation = 'none';
-        setTimeout(() => {
-            marketCapValue.style.animation = 'pulse 1s ease-in-out';
-        }, 10);
-    }
-}, 5000);
-
-// Add some random comic effects
-setInterval(() => {
-    if (Math.random() < 0.2) { // 20% chance every 10 seconds
-        const effects = ['POW!', 'BOOM!', 'ZAP!', 'BANG!', 'CRASH!'];
+    if (Math.random() < 0.1) { // 10% chance every 15 seconds
+        const effects = ['SPLASH!', 'WAVE!', 'OCEAN!'];
         const effect = effects[Math.floor(Math.random() * effects.length)];
         const x = Math.random() * window.innerWidth;
         const y = Math.random() * window.innerHeight;
@@ -656,14 +682,13 @@ setInterval(() => {
             element.style.position = 'absolute';
             element.style.left = x + 'px';
             element.style.top = y + 'px';
-            element.style.fontSize = '2rem';
-            element.style.fontWeight = 'bold';
-            element.style.color = 'rgba(255,255,255,0.5)';
-            element.style.fontFamily = "'Fredoka One', cursive";
-            element.style.textShadow = '2px 2px 4px rgba(0,0,0,0.5)';
+            element.style.fontSize = '1.5rem';
+            element.style.fontWeight = '600';
+            element.style.color = 'rgba(33, 150, 243, 0.4)';
+            element.style.fontFamily = "'Poppins', sans-serif";
             element.style.animation = 'floatUp 3s ease-out forwards';
             element.style.pointerEvents = 'none';
-            element.style.zIndex = '50';
+            element.style.zIndex = '30';
             
             container.appendChild(element);
             
@@ -672,25 +697,15 @@ setInterval(() => {
             }, 3000);
         }
     }
-}, 10000);
+}, 15000);
 
-// Professional error handling
+// Error handling
 window.addEventListener('error', (e) => {
-    console.warn('Greta VS Zetta Battle Error:', e.error);
-    // If there's an error, hide loading screen just in case
+    console.warn('🌊 Ocean Battle Error:', e.error);
     const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen) {
         loadingScreen.style.display = 'none';
     }
 });
 
-// Performance optimization
-let lastUpdate = 0;
-function optimizedUpdate(timestamp) {
-    if (timestamp - lastUpdate > 16) { // ~60fps
-        lastUpdate = timestamp;
-        // Perform any optimized updates here
-    }
-    requestAnimationFrame(optimizedUpdate);
-}
-requestAnimationFrame(optimizedUpdate);
+console.log('🌊 Ocean Battle Script Loaded!');
